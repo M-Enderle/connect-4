@@ -12,8 +12,3 @@ def navigate_menu():
     # insert function for quit button
     print(' You have chosen ' + option)
     return index+1
-
-
-if __name__ == "__main__":
-    print(navigate_menu())
-
