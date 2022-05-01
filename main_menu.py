@@ -1,7 +1,6 @@
 from pick import pick
 
 
-# insert following code into Menu class
 def navigate_menu():
     """
     Makes navigation of menu possible
@@ -12,3 +11,13 @@ def navigate_menu():
     # insert function for quit button
     print(' You have chosen ' + option)
     return index+1
+
+def select_gamemode():
+    """
+    Choose the gametype
+    Possible choice: 
+    Player vs Player , Player vs AI, AI vs AI
+    """
+    options = ['[Player vs Player]', '[Player vs AI]', '[Ai vs AI]']
+    option, index = pick(options, indicator='> ')
+    return option
