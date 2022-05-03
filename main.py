@@ -7,13 +7,12 @@ if __name__ == "__main__":
     p1 = Player(1, game_board)
     p2 = Player(2, game_board)
     active_game = True
+    active_player = p1
 
     # Menu
     menu.navigate_menu()
     # Gameloop
     if menu.select_gamemode() == "[Player vs Player]":
         while active_game:
-            p1.play()
-            print("\n" * 10)
-            print(game_board)
-            p2.play()
+            active_player.play()
+            active_player = p1 if active_player == p2 else p2
