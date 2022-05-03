@@ -1,6 +1,6 @@
 from termtables import to_string, styles
 from termcolor import colored
-from pick import pick
+from pick import Picker
 import sys
 
 
@@ -115,8 +115,10 @@ class Player(GameElement):
                                         f'to place your checker? '
         while True:
             options = [f'{i+1}' for i in range(self._game_board.cols)]
-
-            _, index = pick(options, title, indicator='> ', default_index=0)
+            picker = Picker(options, title=title)
+            for i in range(1, self._game_board._cols + 1):
+                picker.register_custom_handler(ord(f'{i}'), lambda _: (i, i-1))
+            _, index = picker.start()
             if self._use_checker(index):
                 break
             else:
