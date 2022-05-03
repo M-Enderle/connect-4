@@ -110,15 +110,17 @@ class Player(GameElement):
         """
         return self._checkers > 0
 
-    def play(self):
+    def play(self) -> bool:
         title = str(self._game_board) + f'\n\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker? '
         while True:
-            options = [f'{i+1}' for i in range(self._game_board.cols)]
+            options = [f'{i+1}' for i in range(self._game_board.cols)] + ["quit"]
 
             _, index = pick(options, title, indicator='> ', default_index=0)
+            if index == len(options) - 1:
+                return False
             if self._use_checker(index):
-                break
+                return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
                                                 f"your turn. Which column do you want to place your checker? "

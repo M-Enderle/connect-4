@@ -7,10 +7,9 @@ def navigate_menu():
     :return: chosen menu option (starts with 1)
     """
     options = ['[Play Game]', '[Quit]']
-    option, index = pick(options, indicator='> ')
-    # insert function for quit button
-    print(' You have chosen ' + option)
-    return index+1
+    _, index = pick(options, indicator='> ')
+    return index
+
 
 def select_gamemode():
     """
@@ -18,6 +17,6 @@ def select_gamemode():
     Possible choice: 
     Player vs Player , Player vs AI, AI vs AI
     """
-    options = ['[Player vs Player]', '[Player vs AI]', '[Ai vs AI]']
-    option, index = pick(options, indicator='> ')
-    return option
+    options = ['[Player vs Player]', '[Player vs AI]', '[AI vs AI]', '<- back']
+    _, index = pick(options, indicator='> ')
+    return index
