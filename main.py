@@ -1,7 +1,7 @@
 from game_elements import GameBoard, Player
 import main_menu
 from artificial_intelligence import AIPlayer
-
+ 
 if __name__ == "__main__":
     game_board = GameBoard()
     menu = main_menu
