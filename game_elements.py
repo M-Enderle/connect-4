@@ -1,7 +1,5 @@
 from termtables import to_string, styles
-from termcolor import colored
-from pick import Picker
-import sys
+from pick import Picker, pick
 from sympy import Lambda, Symbol
 
 
@@ -73,13 +71,58 @@ class GameBoard(GameElement):
             style=styles.ascii_thin_double,
         )
 
-    def check_win(self) -> bool:
+    def check_win(self, player) -> bool:
         """
         check if a player has won.
         :return: False if no one has won, True otherwise
         """
 
+        self.has_ended = True
+        for x in range(self._cols):
+            for y in range(self._rows):
+                try:
+                    if self._game_board[y][x] == \
+                            self._game_board[y][x + 1] == \
+                            self._game_board[y][x + 2] == \
+                            self._game_board[y][x + 3] == player - 1:
+
+                        return True
+                    if self._game_board[y][x] == \
+                            self._game_board[y + 1][x] == \
+                            self._game_board[y + 2][x] == \
+                            self._game_board[y + 3][x] == player - 1:
+                        return True
+                    if self._game_board[y][x] == \
+                            self._game_board[y + 1][x + 1] == \
+                            self._game_board[y + 2][x + 2] == \
+                            self._game_board[y + 3][x + 3] == player - 1:
+                        return True
+                    if self._game_board[y][x] == \
+                            self._game_board[y + 1][x - 1] == \
+                            self._game_board[y + 2][x - 2] == \
+                            self._game_board[y + 3][x - 3] == player - 1:
+                        return True
+                    if self._game_board[y][x] == \
+                            self._game_board[y - 1][x + 1] == \
+                            self._game_board[y - 2][x + 1] == \
+                            self._game_board[y - 3][x + 1] == player - 1:
+                        return True
+                except IndexError:
+                    pass
+        self.has_ended = False
         return False
+
+    def check_draw(self) -> bool:
+        """
+        check if the game is a draw.
+        :return: True if draw, False otherwise
+        """
+        for x in range(self._cols):
+            for y in range(self._rows):
+                if self._game_board[y][x] == -1:
+                    return False
+        self.has_ended = True
+        return True
 
 
 class Player(GameElement):
@@ -112,25 +155,29 @@ class Player(GameElement):
 
         return self._checkers > 0
 
-    def play(self):
-        """
-        Play the game.
-        """
-
+    def play(self) -> bool:
         title = str(self._game_board) + f'\n\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker? '
         while True:
-            options = [f'{i + 1}' for i in range(self._game_board._cols)]
-            picker = Picker(options, title=title, indicator='> ')
+            options = [f'{i+1}' for i in range(self._game_board._cols)] + ["quit"]
+            picker = Picker(options, title=title, indicator='> ', default_index=0)
             for i in range(1, self._game_board._cols + 1):
                 opt = i
                 ind = i - 1
                 key = ord(str(i))
                 pl = Symbol("pl")
                 picker.register_custom_handler(key, Lambda(pl, (opt, ind)))
-
             option, index = picker.start()
+            if index == len(options) - 1:
+                return False
             if self._use_checker(index):
+                if self._game_board.check_win(self._player_id):
+                    _, index = pick(["back to main menu"], f"Player {self._player_id} has won! Congrats!",
+                                    indicator='> ', default_index=0)
+                    return False
+                if self._game_board.check_draw():
+                    _, index = pick(["back to main menu"], f"The game is a draw!", indicator='> ', default_index=0)
+                    return False
                 return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
