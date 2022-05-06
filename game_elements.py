@@ -1,7 +1,8 @@
 from termtables import to_string, styles
 from termcolor import colored
-from pick import pick
+from pick import Picker
 import sys
+from sympy import Lambda, Symbol
 
 
 class GameElement:
@@ -39,6 +40,7 @@ class GameBoard(GameElement):
         :param col: column to check
         :return: True if valid, False otherwise
         """
+
         return (0 <= col < self._cols) and self._game_board[0][col] == -1
 
     def make_move(self, col: int, player: int) -> bool:
@@ -48,6 +50,7 @@ class GameBoard(GameElement):
         :param player: player to make the move
         :return: True if move was made, False otherwise
         """
+
         if self.check_valid_move(col):
             for row in range(self._rows - 1, -1, -1):
                 if self._game_board[row][col] == -1:
@@ -66,7 +69,7 @@ class GameBoard(GameElement):
             [[" " if self._game_board[row][col] == -1 else ("○" if self._game_board[row][col] == 1
                                                             else "✗")
               for col in range(self._cols)] for row in range(self._rows)],
-            header=list(range(1, self._cols+1)),
+            header=list(range(1, self._cols + 1)),
             style=styles.ascii_thin_double,
         )
 
@@ -75,11 +78,8 @@ class GameBoard(GameElement):
         check if a player has won.
         :return: False if no one has won, True otherwise
         """
-        return False
 
-    @property
-    def cols(self):
-        return self._cols
+        return False
 
 
 class Player(GameElement):
@@ -99,6 +99,7 @@ class Player(GameElement):
         :param col: column to use the checker in
         :return: True if checker was used, False otherwise
         """
+
         if self._check_checkers():
             self._checkers -= 1
             return self._game_board.make_move(col, self._player_id)
@@ -108,20 +109,29 @@ class Player(GameElement):
         """
         Check if the player has any checkers left.
         """
+
         return self._checkers > 0
 
-    def play(self) -> bool:
+    def play(self):
+        """
+        Play the game.
+        """
+
         title = str(self._game_board) + f'\n\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker? '
         while True:
-            options = [f'{i+1}' for i in range(self._game_board.cols)] + ["quit"]
+            options = [f'{i + 1}' for i in range(self._game_board._cols)]
+            picker = Picker(options, title=title, indicator='> ')
+            for i in range(1, self._game_board._cols + 1):
+                opt = i
+                ind = i - 1
+                key = ord(str(i))
+                pl = Symbol("pl")
+                picker.register_custom_handler(key, Lambda(pl, (opt, ind)))
 
-            _, index = pick(options, title, indicator='> ', default_index=0)
-            if index == len(options) - 1:
-                return False
+            option, index = picker.start()
             if self._use_checker(index):
                 return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
                                                 f"your turn. Which column do you want to place your checker? "
-
