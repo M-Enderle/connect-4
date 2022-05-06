@@ -1,22 +1,24 @@
-from game_elements import GameBoard, Player
-import main_menu
+from game_elements import Player
+from main_menu import *
 from artificial_intelligence import AIPlayer
+from utils import *
+
 
 if __name__ == "__main__":
-    game_board = GameBoard()
-    menu = main_menu
 
     while True:
 
+        game_board = GameBoard()
+
         # Exit on quit button
-        if menu.navigate_menu() == 1:
+        if navigate_menu() == 1:
             print("Goodbye!")
             break
 
         else:
 
             active_game = True
-            mode = menu.select_gamemode()
+            mode = select_gamemode()
 
             # Human vs Human
             if mode == 0:
@@ -26,6 +28,11 @@ if __name__ == "__main__":
 
             # Human vs AI
             elif mode == 1:
+
+                diff = select_difficulty()
+
+                if diff == 3:
+                    continue
 
                 p1 = Player(1, game_board)
                 p2 = AIPlayer(2, game_board)
@@ -54,3 +61,7 @@ if __name__ == "__main__":
                     break
                 if not p2.play():
                     break
+
+            if not game_board.has_ended and ask_save_game() == 0:
+                save_game(game_board, "placeholder.txt")
+

@@ -1,6 +1,7 @@
 from termtables import to_string, styles
 from pick import Picker, pick
 from sympy import Lambda, Symbol
+from pick import pick
 
 
 class GameElement:
@@ -31,6 +32,7 @@ class GameBoard(GameElement):
         self._cols = cols
         self._rows = rows
         self._game_board = [[-1 for _ in range(cols)] for _ in range(rows)]
+        self.has_ended = False
 
     def check_valid_move(self, col: int) -> bool:
         """
@@ -76,7 +78,7 @@ class GameBoard(GameElement):
         check if a player has won.
         :return: False if no one has won, True otherwise
         """
-
+        
         self.has_ended = True
         for x in range(self._cols):
             for y in range(self._rows):
@@ -123,6 +125,10 @@ class GameBoard(GameElement):
                     return False
         self.has_ended = True
         return True
+      
+    @property
+    def cols(self):
+        return self._cols
 
 
 class Player(GameElement):
@@ -178,6 +184,7 @@ class Player(GameElement):
                 if self._game_board.check_draw():
                     _, index = pick(["back to main menu"], f"The game is a draw!", indicator='> ', default_index=0)
                     return False
+                  
                 return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
