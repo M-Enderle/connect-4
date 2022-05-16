@@ -4,16 +4,22 @@ from artificial_intelligence import AIPlayer
 from utils import *
 
 
-#hello there
-
 if __name__ == "__main__":
 
     while True:
 
         game_board = GameBoard()
+        menu_option = navigate_menu()
+
+        # Rules with back button
+        if menu_option == 1:
+            leave = show_rules()
+            if leave == 1:
+                break
+            continue
 
         # Exit on quit button
-        if navigate_menu() == 1:
+        if menu_option == 2:
             print("Goodbye!")
             break
 
