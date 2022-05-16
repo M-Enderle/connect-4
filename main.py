@@ -4,6 +4,8 @@ from artificial_intelligence import AIPlayer
 from utils import *
 
 
+#hello there
+
 if __name__ == "__main__":
 
     while True:
