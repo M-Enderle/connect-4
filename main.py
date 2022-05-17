@@ -13,9 +13,8 @@ if __name__ == "__main__":
 
         # Rules with back button
         if menu_option == 1:
-            leave = show_rules()
-            if leave == 1:
-                break
+            show_rules()
+            input()
             continue
 
         # Exit on quit button

@@ -61,10 +61,7 @@ def show_rules():
     for rule in rules:
         print(rule)
     options = ['<- back']
-    print('Press "1" to go back to the Menu ')
-    print_options(options)
-    return ask_for_input(options)
-
+    print('Press any key to go back to the Menu ')
 
 def select_gamemode():
     """
