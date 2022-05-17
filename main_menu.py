@@ -42,11 +42,24 @@ def navigate_menu():
     :return: chosen menu option
     """
     print('~Connect 4 Main Menu~')
-    options = ['Play Game', 'Quit']
+    options = ['Play Game', 'Rules', 'Quit']
     print_options(options)
     print('Please select an option: ')
     return ask_for_input(options)
 
+
+def show_rules():
+    """
+    Shows rules
+    """
+    print('~Rules~')
+    rules = ["1. Players must connect 4 of the same checkers in a row to win.",
+             "2. Only one checker is played at a time.",
+             "3. Players can be on the offensive or defensive.",
+             "4. The game ends when there is a 4-in-a-row or a stalemate."]
+    for rule in rules:
+        print(rule)
+    input('Press "Enter" to go back to the Menu \n')
 
 def select_gamemode():
     """
