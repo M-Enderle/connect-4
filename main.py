@@ -11,7 +11,7 @@ if __name__ == "__main__":
         game_board = GameBoard()
         menu_option = navigate_menu()
 
-        # Rules with back button
+        # Rules with return button
         if menu_option == 1:
             show_rules()
             input()

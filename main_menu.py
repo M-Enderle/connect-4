@@ -50,8 +50,7 @@ def navigate_menu():
 
 def show_rules():
     """
-    Go back to the Menu
-    :return: chosen menu option
+    Shows rules
     """
     print('~Rules~')
     rules = ["1. Players must connect 4 of the same checkers in a row to win.",
