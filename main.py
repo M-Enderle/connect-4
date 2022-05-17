@@ -14,7 +14,6 @@ if __name__ == "__main__":
         # Rules with return button
         if menu_option == 1:
             show_rules()
-            input()
             continue
 
         # Exit on quit button

@@ -59,8 +59,7 @@ def show_rules():
              "4. The game ends when there is a 4-in-a-row or a stalemate."]
     for rule in rules:
         print(rule)
-    options = ['<- back']
-    print('Press any key to go back to the Menu ')
+    input('Press "Enter" to go back to the Menu \n')
 
 def select_gamemode():
     """
