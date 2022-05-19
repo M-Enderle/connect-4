@@ -22,7 +22,14 @@ class AIPlayer(Player):
         choice = choices.pop(0)[0]
         while self._game_board.check_valid_move(choice - 1) is False:
             choice = choices.pop(0)[0]
-        return self._game_board.make_move(choice - 1, self._player_id)
+        self._game_board.make_move(choice - 1, self._player_id)
+        if self._game_board.check_win(self._player_id):
+            input("someone won text")
+            return False
+        if self._game_board.check_draw():
+            input("its a draw text")
+            return False
+        return True
 
     def _check_for_chains(self, row, col, player_id, game_board):
 

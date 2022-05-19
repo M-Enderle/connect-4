@@ -34,16 +34,16 @@ if __name__ == "__main__":
 
             # Human vs AI
             elif mode == 1:
+                # temp
+                # diff = select_difficulty()
 
-                diff = select_difficulty()
-
-                if diff == 3:
-                    continue
+                # if diff == 3:
+                #    continue
 
                 p1 = Player(1, game_board)
                 p2 = AIPlayer(2, game_board)
 
-                raise NotImplementedError("Computer vs Human not implemented yet!")
+                # raise NotImplementedError("Computer vs Human not implemented yet!")
 
             # AI vs AI
             elif mode == 2:
