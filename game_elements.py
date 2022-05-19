@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from termtables import to_string, styles
 from pick import Picker, pick
 from sympy import Lambda, Symbol
@@ -33,6 +35,9 @@ class GameBoard(GameElement):
         self._rows = rows
         self._game_board = [[-1 for _ in range(cols)] for _ in range(rows)]
         self.has_ended = False
+
+    def __getitem__(self, item):
+        return self._game_board[item]
 
     def check_valid_move(self, col: int) -> bool:
         """
@@ -129,6 +134,13 @@ class GameBoard(GameElement):
     @property
     def cols(self):
         return self._cols
+
+    def deepcopy(self):
+        """
+        deepcopy the game board.
+        :return: deepcopy of the game board
+        """
+        return deepcopy(self)
 
 
 class Player(GameElement):
