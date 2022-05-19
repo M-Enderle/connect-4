@@ -1,7 +1,5 @@
 from termtables import to_string, styles
-from pick import Picker, pick
-from sympy import Lambda, Symbol
-from pick import pick
+import main_menu
 
 
 class GameElement:
@@ -162,27 +160,19 @@ class Player(GameElement):
         return self._checkers > 0
 
     def play(self) -> bool:
-        title = str(self._game_board) + f'\n\nPlayer {self._player_id}, its your turn. Which column do you want ' \
-                                        f'to place your checker? '
+        print(str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
+                                        f'to place your checker?\n')
         while True:
-            options = [f'{i+1}' for i in range(self._game_board._cols)] + ["quit"]
-            picker = Picker(options, title=title, indicator='> ', default_index=0)
-            for i in range(1, self._game_board._cols + 1):
-                opt = i
-                ind = i - 1
-                key = ord(str(i))
-                pl = Symbol("pl")
-                picker.register_custom_handler(key, Lambda(pl, (opt, ind)))
-            option, index = picker.start()
+            options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
+            index = main_menu.navigate_game(options)
             if index == len(options) - 1:
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
-                    _, index = pick(["back to main menu"], f"Player {self._player_id} has won! Congrats!",
-                                    indicator='> ', default_index=0)
+                    main_menu.win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
-                    _, index = pick(["back to main menu"], f"The game is a draw!", indicator='> ', default_index=0)
+                    main_menu.draw_menu()
                     return False
                   
                 return True
