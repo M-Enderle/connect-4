@@ -9,9 +9,15 @@ if __name__ == "__main__":
     while True:
 
         game_board = GameBoard()
+        menu_option = navigate_menu()
+
+        # Rules with return button
+        if menu_option == 1:
+            show_rules()
+            continue
 
         # Exit on quit button
-        if navigate_menu() == 1:
+        if menu_option == 2:
             print("Goodbye!")
             break
 
