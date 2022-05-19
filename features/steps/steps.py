@@ -1,21 +1,70 @@
-from behave import given, when, then, step
-import main
-import main_menu
+from behave import given, when, then
+import wexpect
 
 
 # Scenario: Starting the game and choosing 'Play Game'
 @given('starting main.py')
 def step_impl(context):
-    context.game_board = main.GameBoard()
-    context.menu = main.main_menu
+    # Start cmd as child process
+    context.child = wexpect.spawn('cmd.exe')
+
+    # Please select own path to main.py
+    cmd_commands = ['cd C:\\Users\\jasmi\\PycharmProjects\\connect-4', 'python main.py']
+
+    for command in cmd_commands:
+        # Wait for prompt when cmd becomes ready.
+        context.child.expect('>')
+
+        # run command
+        context.child.sendline(command)
+
+        # Print content
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
 
 @when('the user selects "Play Game"')
 def step_impl(context):
-    context.navigate_menu = context.menu.navigate_menu()
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
 
 @then('the user gets transferred to the next menu')
 def step_impl(context):
-    context.mode = context.menu.select_gamemode()
+    # Didn't figure out how to implement this step yet
+
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('4')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('3')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+    # Exit from cmd
+    # context.child.sendline('exit')
+
+    # Waiting for cmd termination.
+    # context.child.wait()
 
 
 '''
@@ -62,4 +111,3 @@ def step_impl(context):
 @when('the "quit" button is selected')
 @then('the user will be asked if they want to save the game')
 '''
-

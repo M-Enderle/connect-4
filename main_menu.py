@@ -94,3 +94,29 @@ def select_difficulty():
     print_options(options)
     print('Please choose a difficulty: ')
     return ask_for_input(options)
+
+
+def win_menu(player_id):
+    """
+    Appear when player wins
+    """
+    print('Player ' + str(player_id) + ' has won! Congrats!')
+    input('Press "enter" to return to the main menu \n')
+
+
+def draw_menu():
+    """
+    Appear when it's a draw
+    """
+    print('The game is a draw!')
+    input('Press "enter" to return to the main menu \n')
+
+
+def navigate_game(options):
+    """
+    Makes navigation of menu possible
+    :return: chosen menu option
+    """
+    print_options(options)
+    print('Please select an option: ')
+    return ask_for_input(options)
