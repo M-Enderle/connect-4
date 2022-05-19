@@ -3,7 +3,8 @@ from game_elements import Player, GameBoard
 
 class AIPlayer(Player):
     """
-    piconeeeeeeeeeeeeeect
+    An AI based on simple mathematics.
+    Probably difficulty easy.
     """
 
     def __init__(self, player_id, game_board: GameBoard, checkers: int = 21):
@@ -31,7 +32,6 @@ class AIPlayer(Player):
         return True
 
     def _check_for_chains(self, row, col, player_id, game_board):
-
         def find_chain(_row, _col, _player_id, _game_board, row_movement=0, col_movement=0):
             if _row < 0 or _row >= _game_board._rows or _col < 0 or _col >= _game_board._cols:
                 return 0
