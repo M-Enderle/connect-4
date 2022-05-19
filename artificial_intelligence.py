@@ -7,10 +7,14 @@ class AIPlayer(Player):
     Probably difficulty easy.
     """
 
-    def __init__(self, player_id, game_board: GameBoard, checkers: int = 21):
+    def __init__(self, player_id: int, game_board: GameBoard, checkers: int = 21):
         super().__init__(player_id, game_board, checkers)
 
     def play(self):
+        """
+        Plays a move.
+        :return: True if game is still running, False if game is over.
+        """
         res = dict()
         res["own"] = dict()
         res["enemy"] = dict()
@@ -31,8 +35,20 @@ class AIPlayer(Player):
             return False
         return True
 
-    def _check_for_chains(self, row, col, player_id, game_board):
-        def find_chain(_row, _col, _player_id, _game_board, row_movement=0, col_movement=0):
+    def _check_for_chains(self, row: int, col: int, player_id: int, game_board: GameBoard) -> list:
+        """
+        Checks for chains at a specific spot in every direction.
+        :param row: The row to check for chains.
+        :param col: The column to check for chains.
+        :param player_id: The player id to check for chains.
+        :param game_board: The game board to check for chains.
+        :return: A list with the possible chains.
+        """
+        def find_chain(_row: int, _col: int, _player_id: int, _game_board: GameBoard, row_movement: int = 0,
+                       col_movement: int = 0) -> int:
+            """
+            Finds a chain in a certain direction.
+            """
             if _row < 0 or _row >= _game_board._rows or _col < 0 or _col >= _game_board._cols:
                 return 0
             if _game_board[_row][_col] == -1:
@@ -60,7 +76,12 @@ class AIPlayer(Player):
             board.append(find_chain(row, col, player_id, game_board, *directions[direction]))
         return board
 
-    def _cfp(self, game_board=None):
+    def _possible_chains(self, game_board: GameBoard = None) -> dict:
+        """
+        Checks for possible chains for both players.
+        :param game_board: The game board to check for chains. If None, the own game board is used.
+        :return: A dictionary with the possible chains for both players.
+        """
         if game_board is None:
             game_board = self._game_board
         own = []
@@ -73,7 +94,13 @@ class AIPlayer(Player):
                 enemy[row].append(self._check_for_chains(row, col, 2 if self._player_id == 1 else 1, game_board))
         return {"own": own, "enemy": enemy}
 
-    def _simulate_move(self, col, own=True):
+    def _simulate_move(self, col: int, own: bool = True) -> int:
+        """
+        Simulates a move for a specific player.
+        :param col: The column to simulate a move for.
+        :param own: If the move is for the own player or the enemy player.
+        :return: The difference of chains after the move.
+        """
         if own:
             player_id = self._player_id
         else:
@@ -81,8 +108,8 @@ class AIPlayer(Player):
         gameboard = self._game_board.deepcopy()
         if not gameboard.make_move(col, player_id):
             return 0
-        before = self._cfp(game_board=self._game_board)
-        after = self._cfp(game_board=gameboard)
+        before = self._possible_chains(game_board=self._game_board)
+        after = self._possible_chains(game_board=gameboard)
         diff = 0
         for row in range(gameboard._rows):
             for col in range(gameboard._cols):
@@ -93,6 +120,11 @@ class AIPlayer(Player):
         return diff
 
     def _choice(self, res):
+        """
+        Chooses the best move.
+        :param res: The results of the simulations.
+        :return: The best move.
+        """
         choices = {1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 0, 7: 0}
         for col in range(self._game_board._cols):
             choices[col + 1] += max(res["own"][f'{col}'], res["enemy"][f'{col}'])

@@ -172,6 +172,10 @@ class Player(GameElement):
         return self._checkers > 0
 
     def play(self) -> bool:
+        """
+        Plays a move.
+        :return: True if game is still running, False if game is over.
+        """
         print(str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker?\n')
         while True:
