@@ -17,7 +17,6 @@ class AIPlayer(Player):
             res["own"][f'{i}'] = self._simulate_move(i)
             res["enemy"][f'{i}'] = self._simulate_move(i, False)
         choices = self._choice(res)
-        # sort choices by value
         choices = sorted(choices.items(), key=lambda x: x[1], reverse=True)
         choice = choices.pop(0)[0]
         while self._game_board.check_valid_move(choice - 1) is False:
@@ -98,30 +97,3 @@ class AIPlayer(Player):
         for col in range(self._game_board._cols):
             choices[col + 1] += max(res["own"][f'{col}'], res["enemy"][f'{col}'])
         return choices
-
-
-# TEMPORARY
-def setup():
-    g = GameBoard()
-    ai = AIPlayer(1, g)
-    g.make_move(0, 1)
-    g.make_move(1, 1)
-    g.make_move(2, 1)
-    g.make_move(3, 2)
-    g.make_move(3, 1)
-    g.make_move(2, 1)
-    g.make_move(0, 2)
-    g.make_move(1, 2)
-    g.make_move(3, 2)
-    g.make_move(0, 2)
-    g.make_move(3, 2)
-    g.make_move(1, 1)
-    g.make_move(2, 1)
-    g.make_move(6, 2)
-    g.make_move(6, 2)
-    g.make_move(6, 2)
-    g.make_move(6, 2)
-    g.make_move(6, 2)
-    g.make_move(6, 2)
-    print(g)
-    return g, ai
