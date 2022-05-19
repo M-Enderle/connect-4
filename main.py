@@ -3,7 +3,6 @@ from main_menu import *
 from artificial_intelligence import AIPlayer
 from utils import *
 
-
 if __name__ == "__main__":
 
     while True:
@@ -34,16 +33,14 @@ if __name__ == "__main__":
 
             # Human vs AI
             elif mode == 1:
-                # temp
-                # diff = select_difficulty()
 
-                # if diff == 3:
-                #    continue
+                diff = select_difficulty()
+
+                if diff == 3:
+                    continue
 
                 p1 = Player(1, game_board)
                 p2 = AIPlayer(2, game_board)
-
-                # raise NotImplementedError("Computer vs Human not implemented yet!")
 
             # AI vs AI
             elif mode == 2:
@@ -70,4 +67,3 @@ if __name__ == "__main__":
 
             if not game_board.has_ended and ask_save_game() == 0:
                 save_game(game_board, "placeholder.txt")
-
