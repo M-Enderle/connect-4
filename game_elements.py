@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from termtables import to_string, styles
 import main_menu
 
@@ -31,6 +33,9 @@ class GameBoard(GameElement):
         self._rows = rows
         self._game_board = [[-1 for _ in range(cols)] for _ in range(rows)]
         self.has_ended = False
+
+    def __getitem__(self, item):
+        return self._game_board[item]
 
     def check_valid_move(self, col: int) -> bool:
         """
@@ -128,6 +133,13 @@ class GameBoard(GameElement):
     def cols(self):
         return self._cols
 
+    def deepcopy(self):
+        """
+        deepcopy the game board.
+        :return: deepcopy of the game board
+        """
+        return deepcopy(self)
+
 
 class Player(GameElement):
     """
@@ -160,6 +172,10 @@ class Player(GameElement):
         return self._checkers > 0
 
     def play(self) -> bool:
+        """
+        Plays a move.
+        :return: True if game is still running, False if game is over.
+        """
         print(str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker?\n')
         while True:
