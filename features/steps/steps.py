@@ -1,15 +1,41 @@
 from behave import given, when, then
 import wexpect
+from init import init
 
+'''
+Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment
+You can send a user input with context.child.sendline(Your command in String)
+You can also expect a String from the console with context.child.expect(Expected String)
+It is important for testing purposes that you setup the timer correctly. Right now we are using the timeout of 3.
+If the timout is not set correctly, it will stop behave for 2 minutes so please dont forget that.
+Example: context.child.expect("Connect 4 Main Menu", timeout=3)
+
+You can also debug behave.
+I created a file called behave.ini which allows us to read printed statements.
+To turn it on, just put both stderr_capture and stdout_capture to False.
+(Tip: if you want to work on your scenario only without reading debugging messages from other scenarios,
+comment every other scenario except yours in everything.feature with #. This make your scenario isolated.)
+To print console or user input just use
+print(context.child.before, end='')
+print(context.child.after, end='')
+
+-Johni
+'''
+
+'''
+Btw, I also created a file called init.py where you can change your project directory more easier.
+Just change the project_path variable.
+
+-Johni
+'''
 
 # Scenario: Starting the game and choosing 'Play Game'
 @given('starting main.py')
 def step_impl(context):
     # Start cmd as child process
     context.child = wexpect.spawn('cmd.exe')
-
     # Please select own path to main.py
-    cmd_commands = ['cd C:\\Users\\jasmi\\PycharmProjects\\connect-4', 'python main.py']
+    cmd_commands = ["cd " + init.project_path, init.start_game]
 
     for command in cmd_commands:
         # Wait for prompt when cmd becomes ready.
@@ -21,6 +47,21 @@ def step_impl(context):
         # Print content
         print(context.child.before, end='')
         print(context.child.after, end='')
+
+@when('the user selects Quit')
+def step_impl(context):
+    #Expecting from console and sending input
+    context.child.expect('Please select an option: ', timeout=3)
+    context.child.sendline('3')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the game closes itself')
+def step_impl(context):
+    #Expecting Goodbye! from console
+    context.child.expect('Goodbye!', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 
 @when('the user selects "Play Game"')
@@ -41,7 +82,7 @@ def step_impl(context):
     # Didn't figure out how to implement this step yet
 
     # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
+    context.child.expect('Please select an option: ', timeout=3)
 
     # run command
     context.child.sendline('4')
@@ -51,7 +92,7 @@ def step_impl(context):
     print(context.child.after, end='')
 
     # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
+    context.child.expect('Please select an option: ', timeout=3)
 
     # run command
     context.child.sendline('3')
@@ -67,13 +108,32 @@ def step_impl(context):
     # context.child.wait()
 
 
-'''
-@given('starting main.py')
+@when('the user is in the gamemode menu')
 def step_impl(context):
-@when('the user selects "Quit"')
-@then('the game closes itself')
+    #Expecting to be in Main menu and going into gamemode menu
+    context.child.expect('Please select an option: ', timeout=3)
+    context.child.sendline('1')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user selects the <- back button')
+def step_impl(context):
+    #Selecting <- back button
+    context.child.expect('Game Mode Selection Menu', timeout=3)
+    context.child.sendline('4')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the user gets transferred to the start menu')
+def step_impl(context):
+    #Expecting to be in main menu
+    context.child.expect('Connect 4 Main Menu', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 
+
+'''
 @given('the user is in the gamemode menu')
 @when('the user selects the "<- back" button')
 @then('the user gets transferred to the start menu')
