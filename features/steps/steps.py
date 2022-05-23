@@ -135,7 +135,7 @@ def step_impl(context):
 @then('the user will be asked if they want to save the game')
 def step_impl(context):
     # User should be asked if they want to save the game
-    context.child.expect('Do you want to save the current game?: ', timeout=3)
+    context.child.expect('Do you want to save the current game?', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
