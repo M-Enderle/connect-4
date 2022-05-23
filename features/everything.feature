@@ -43,7 +43,9 @@ Scenario: Going back to the start menu
 #   Then the message "The game is a draw!" appears
 #   And the user can return back to the main menu
 
-#Scenario: Quitting during game
-#   Given there is a game running
-#   When the "quit" button is selected
-#   Then the user will be asked if they want to save the game
+Scenario: Quitting during game
+   Given starting main.py
+   When there is a game running
+   And the Quit button is selected
+   Then the game quits
+   And the user will be asked if they want to save the game
