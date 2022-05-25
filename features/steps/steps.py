@@ -171,3 +171,117 @@ def step_impl(context):
 @when('the "quit" button is selected')
 @then('the user will be asked if they want to save the game')
 '''
+
+
+# Scenario: Selecting 'Player vs Player'
+@given('starting main.py')
+def step_impl(context):
+    # Start cmd as child process
+    context.child = wexpect.spawn('cmd.exe')
+    # Please select own path to main.py
+    cmd_commands = ["cd " + init.project_path, init.start_game]
+
+    for command in cmd_commands:
+        # Wait for prompt when cmd becomes ready.
+        context.child.expect('>')
+
+        # run command
+        context.child.sendline(command)
+
+        # Print content
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
+@when('the user selects "Play Game"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user selects "Player vs Player"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the selected gamemode starts')
+def step_impl(context):
+    #Expecting the selected game mode starts
+    context.child.expect('You have chosen "Player vs Player"', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+
+# Scenario: move is valid
+@given('starting main.py')
+def step_impl(context):
+    # Start cmd as child process
+    context.child = wexpect.spawn('cmd.exe')
+    # Please select own path to main.py
+    cmd_commands = ["cd " + init.project_path, init.start_game]
+
+    for command in cmd_commands:
+        # Wait for prompt when cmd becomes ready.
+        context.child.expect('>')
+
+        # run command
+        context.child.sendline(command)
+
+        # Print content
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
+@when('the user selects "Play Game"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user selects "Player vs Player"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user selects a column between 1 & 7')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the move is valid')
+def step_impl(context):
+    #Expecting the selected move is valid
+    context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
