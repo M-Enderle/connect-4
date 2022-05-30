@@ -174,36 +174,6 @@ def step_impl(context):
 
 
 # Scenario: Selecting 'Player vs Player'
-@given('starting main.py')
-def step_impl(context):
-    # Start cmd as child process
-    context.child = wexpect.spawn('cmd.exe')
-    # Please select own path to main.py
-    cmd_commands = ["cd " + init.project_path, init.start_game]
-
-    for command in cmd_commands:
-        # Wait for prompt when cmd becomes ready.
-        context.child.expect('>')
-
-        # run command
-        context.child.sendline(command)
-
-        # Print content
-        print(context.child.before, end='')
-        print(context.child.after, end='')
-
-@when('the user selects "Play Game"')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('1')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
 @when('the user selects "Player vs Player"')
 def step_impl(context):
     # Wait for prompt when cmd becomes ready.
@@ -225,36 +195,6 @@ def step_impl(context):
 
 
 # Scenario: move is valid
-@given('starting main.py')
-def step_impl(context):
-    # Start cmd as child process
-    context.child = wexpect.spawn('cmd.exe')
-    # Please select own path to main.py
-    cmd_commands = ["cd " + init.project_path, init.start_game]
-
-    for command in cmd_commands:
-        # Wait for prompt when cmd becomes ready.
-        context.child.expect('>')
-
-        # run command
-        context.child.sendline(command)
-
-        # Print content
-        print(context.child.before, end='')
-        print(context.child.after, end='')
-
-@when('the user selects "Play Game"')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('1')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
 @when('the user selects "Player vs Player"')
 def step_impl(context):
     # Wait for prompt when cmd becomes ready.
@@ -267,7 +207,7 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
-@when('the user selects a column between 1 & 7')
+@when('the Player selects column <columns>')
 def step_impl(context):
     # Wait for prompt when cmd becomes ready.
     context.child.expect('Please select an option: ')
