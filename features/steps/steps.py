@@ -177,3 +177,57 @@ def step_impl(context):
 @when('the "quit" button is selected')
 @then('the user will be asked if they want to save the game')
 '''
+
+
+# Scenario: Selecting 'Player vs Player'
+@when('the user selects "Player vs Player"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the selected gamemode starts')
+def step_impl(context):
+    #Expecting the selected game mode starts
+    context.child.expect('You have chosen "Player vs Player"', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+
+# Scenario: move is valid
+@when('the user selects "Player vs Player"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the Player selects column <columns>')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the move is valid')
+def step_impl(context):
+    #Expecting the selected move is valid
+    context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
