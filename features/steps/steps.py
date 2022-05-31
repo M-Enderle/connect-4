@@ -195,18 +195,6 @@ def step_impl(context):
 
 
 # Scenario: move is valid
-@when('the user selects "Player vs Player"')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('1')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
 @when('the Player selects column <columns>')
 def step_impl(context):
     # Wait for prompt when cmd becomes ready.
