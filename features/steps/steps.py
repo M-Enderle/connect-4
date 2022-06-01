@@ -3,7 +3,7 @@ import wexpect
 from init import init
 
 '''
-Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment
+Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment.
 You can send a user input with context.child.sendline(Your command in String)
 You can also expect a String from the console with context.child.expect(Expected String)
 It is important for testing purposes that you setup the timer correctly. Right now we are using the timeout of 3.
@@ -98,6 +98,80 @@ def step_impl(context):
     context.child.expect('Connect 4 Main Menu', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
+
+
+
+
+#Scenario: Player's turn is invalid
+@when('the move is invalid')
+def step_impl(context):
+    #Expecting that the turn of the current Player is invalid
+    context.child.expect('invalid', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the message "this column is already full!" appears as long as the input is invalid')
+def step_impl(context):
+    #the message should appear in the console
+    context.child.expect('this column is already full!', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+#Scenario: Player wins
+@when('a player wins')
+def step_impl(context):
+    #Expected, that the player wins the game
+    context.child.expect('Player wins', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('there is a congratulation message')
+def step_impl(context):
+    #A message appears, which congratulates the player for winning the game
+    context.child.expect('Congratulation message appears', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the user can return back to the main menu')
+def step_impl(context):
+    #The user can now go back to the menu
+    context.child.expect('Menu appears', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+#Scenario: Draw
+@when('the board is full')
+def step_impl(context):
+    #No one can set checkers anymore, because the board is already full
+    context.child.expect('full board', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('no one has won')
+def step_impl(context):
+    #expected, that the game will be over and no one has won
+    context.child.expect('it is a draw', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the message "The game is a draw!" appears')
+def step_impl(context):
+    #Now it is game over and a message shows up
+    context.child.expect('"The game is a draw!"', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the user can return back to the main menu')
+def step_impl(context):
+    #The player should be able to go back to the menu
+    context.child.expect('Menu appears', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+
+
+
 
 # Scenario: Quitting during game
 @when('there is a game running')

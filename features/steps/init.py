@@ -1,3 +1,3 @@
 class init:
-    project_path = r"C:\Users\johnt\Desktop\RandomScripts\connect-4"
+    project_path = r"C:\Users\louis\PycharmProjects\connect-4"
     start_game = "python main.py"
