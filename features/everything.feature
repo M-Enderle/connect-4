@@ -28,23 +28,26 @@ Scenario: Player's turn is valid
    And the move is valid
    Then a checker has to be in the lowest free row of the selected column
 
-#Scenario: Player's turn is invalid
-#   Given Player selects column <columns>
-#   When the move is invalid
-#   Then the message "this column is already full!" appears as long as the input is invalid
+Scenario: Player's turn is invalid
+   Given starting main.py
+   When there is a game running
+   And Player makes invalid move
+   Then a message will appear which sais that the move is invalid
+   And the game asks for a new input
 
-#Scenario: Player wins
-#   Given two players play against each other
-#   When a player wins
-#   Then there is a congratulation message
-#   And the user can return back to the main menu
+Scenario: Player wins
+   Given starting main.py
+   When there is a game running
+   And a player wins
+   Then there is a congratulation message
+   And the user can return back to the main menu
 
-#Scenario: Draw
-#   Given two players play against each other
-#   When the board is full
-#   And no one has won
-#   Then the message "The game is a draw!" appears
-#   And the user can return back to the main menu
+Scenario: Draw
+   Given starting main.py
+   When there is a game running
+   And the board is full
+   Then the message "The game is a draw!" appears
+   And the user can return back to the main menu
 
 Scenario: Quitting during game
    Given starting main.py

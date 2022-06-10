@@ -99,24 +99,89 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
-# Scenario: Quitting during game
+# Scenario: Player's turn is invalid
 @when('there is a game running')
 def step_impl(context):
-    # Sets up the game
-    menu_selection = {'~Connect 4 Main Menu~': '1', 'Game Mode Selection Menu': '1'}
-
-    # Goes through the menus to select 'Player vs Player'
-    for expect, send in menu_selection.items():
-        context.child.expect(expect, timeout=3)
-        context.child.sendline(send)
-        print(context.child.before, end='')
-        print(context.child.after, end='')
-
-    # In game
-    context.child.expect('Which column do you want to place your checker?', timeout=3)
+    context.child.expect('Connect 4 Main Menu', timeout=3)
+    context.child.sendline('1')
+    context.child.expect('Game Mode Selection Menu', timeout=3)
+    context.child.sendline('1')
+    context.child.expect('its your turn', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+@when('Player makes invalid move')
+def step_impl(context):
+    context.child.expect('Please select an option', timeout=3)
+    context.child.sendline('9')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('a message will appear which sais that the move is invalid')
+def step_impl(context):
+    context.child.expect('You can only choose numbers between 1 and 8', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the game asks for a new input')
+def step_impl(context):
+    context.child.expect('Please select an option', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+# Scenario: Player wins
+@when('a player wins')
+def step_impl(context):
+    moves = [1, 2, 1, 2, 1, 2, 1]
+    for move in moves:
+        context.child.expect('Please select an option:', timeout=3)
+        context.child.sendline(str(move))
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
+@then('there is a congratulation message')
+def step_impl(context):
+    context.child.expect('Congrats!', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the user can return back to the main menu')
+def step_impl(context):
+    context.child.expect('Press "enter" to return to the main menu', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+# Scenario: Draw
+@when('the board is full')
+def step_impl(context):
+    first_column = 1
+    second_column = 2
+    for rounds in range(7):
+        if first_column == 9:
+            first_column = 2
+        if second_column == 8:
+            second_column = 1
+        for turns in range(3):
+            context.child.expect('Which column do you want to place your checker', timeout=3)
+            context.child.sendline(str(first_column))
+            print(context.child.before, end='')
+            print(context.child.after, end='')
+            context.child.expect('Which column do you want to place your checker', timeout=3)
+            context.child.sendline(str(second_column))
+            print(context.child.before, end='')
+            print(context.child.after, end='')
+        first_column += 2
+        second_column += 2
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the message "The game is a draw!" appears')
+def step_impl(context):
+    context.child.expect('The game is a draw', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+# Scenario: Quitting during game
 @when('the Quit button is selected')
 def step_impl(context):
     # Selects quit button during game
