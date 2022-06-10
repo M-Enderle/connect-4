@@ -26,7 +26,7 @@ def input_validation(options):
             print('This is not a number.')
         except IndexError:
             print('This number is not an option.')
-        print('Please only choose numbers between 1 and ' + str(length))
+        print('You can only choose numbers between 1 and ' + str(length) + '\nPlease select an option:')
 
 
 def print_options(options):
