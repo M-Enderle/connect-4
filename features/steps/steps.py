@@ -204,41 +204,97 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
-'''
-@given('the user is in the gamemode menu')
-@when('the user selects the "<- back" button')
-@then('the user gets transferred to the start menu')
-
-
-@given('the user is in the gamemode menu')
+# Scenario: Selecting 'Player vs Player'
 @when('the user selects "Player vs Player"')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
 @then('the selected gamemode starts')
+def step_impl(context):
+    #Expecting the selected game mode starts
+    context.child.expect('You have chosen "Player vs Player"', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 
-@given('the Player selects column <columns>')
-@when('the move is valid')
-@then('a checker has to be in the lowest free row of the selected column')
+# Scenario: move is valid
+@when('the Player selects column <columns>')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the move is valid')
+def step_impl(context):
+    #Expecting the selected move is valid
+    context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user presses rules')
+def step_impl(context):
+    context.child.expect('Please select an option:', timeout=3)
+    context.child.sendline('2')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('the rules appears')
+def step_impl(context):
+    context.child.expect('~Rules~',timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('when the user presses enter he is back to the main menu')
+def step_impl(context):
+    context.child.sendline()
+    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the user selects Player vs AI')
+def step_impl(context):
+    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    context.child.sendline('1')
+    context.child.expect('~Game Mode Selection Menu~',timeout=3)
+    context.child.sendline('2')
+    context.child.expect('~Difficulty Menu of AI~',timeout=3)
+    context.child.sendline('1')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 
-@given('Player selects column <columns>')
-@when('the move is invalid')
-@then('the message "this column is already full!" appears as long as the input is invalid')
+@then('Plays a game vs AI and loses')
+def step_impl(context):
+    #Player moves
+    context.child.sendline('1')
+    context.child.sendline('1')
+    context.child.sendline('1')
+    context.child.sendline('1')
+    context.child.sendline('2')
+    context.child.sendline('2')
+    context.child.sendline('2')
+    context.child.sendline('3')
+    context.child.sendline('3')
+    
+    #AI should win
+    context.child.expect('someone won text')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 
-@given('two players play against each other')
-@when('a player wins')
-@then('there is a congratulation message')
-@then('the user can return back to the main menu')
 
 
-@given('two players play against each other')
-@when('the board is full')
-@when('no one has won')
-@then('the message "The game is a draw!" appears')
-@then('the user can return back to the main menu')
-
-
-@given('there is a game running')
-@when('the "quit" button is selected')
-@then('the user will be asked if they want to save the game')
-'''
