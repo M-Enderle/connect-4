@@ -55,3 +55,14 @@ Scenario: Quitting during game
    And the Quit button is selected
    Then the game quits
    And the user will be asked if they want to save the game
+
+Scenario: Looking at the Rules
+   Given starting main.py
+   When the user presses rules
+   Then the rules appears
+   And when the user presses enter, he is back to the main menu
+
+Scenario: A game vs AI
+   Given starting main.py
+   When the user selects Player vs AI
+   Then Plays a game vs AI and loses
