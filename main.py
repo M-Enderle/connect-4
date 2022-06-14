@@ -1,6 +1,6 @@
+from artificial_intelligence import AIPlayer
 from game_elements import Player
 from main_menu import *
-from artificial_intelligence import AIPlayer
 from utils import *
 
 if __name__ == "__main__":
@@ -40,15 +40,12 @@ if __name__ == "__main__":
                     continue
 
                 p1 = Player(1, game_board)
-                p2 = AIPlayer(2, game_board)
+                p2 = AIPlayer(2, game_board, ai_vs_ai=False)
 
             # AI vs AI
             elif mode == 2:
-
-                p1 = AIPlayer(1, game_board)
-                p2 = AIPlayer(2, game_board)
-
-                raise NotImplementedError("Computer vs Computer not implemented yet!")
+                p1 = AIPlayer(1, game_board, ai_vs_ai=True)
+                p2 = AIPlayer(2, game_board, ai_vs_ai=True)
 
             # back to main menu
             elif mode == 3:
