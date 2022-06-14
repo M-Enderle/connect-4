@@ -1,3 +1,7 @@
+import random
+import time
+
+import main_menu
 from game_elements import Player, GameBoard
 
 
@@ -7,10 +11,11 @@ class AIPlayer(Player):
     Probably difficulty easy.
     """
 
-    def __init__(self, player_id: int, game_board: GameBoard, checkers: int = 21):
+    def __init__(self, player_id: int, game_board: GameBoard, checkers: int = 21, ai_vs_ai: bool = False):
         super().__init__(player_id, game_board, checkers)
+        self._ai_vs_ai = ai_vs_ai
 
-    def play(self):
+    def play(self) -> bool:
         """
         Plays a move.
         :return: True if game is still running, False if game is over.
@@ -23,15 +28,21 @@ class AIPlayer(Player):
             res["enemy"][f'{i}'] = self._simulate_move(i, False)
         choices = self._choice(res)
         choices = sorted(choices.items(), key=lambda x: x[1], reverse=True)
+        if all(x[1] == choices[0][1] for x in choices):
+            random.shuffle(choices)
         choice = choices.pop(0)[0]
         while self._game_board.check_valid_move(choice - 1) is False:
             choice = choices.pop(0)[0]
         self._game_board.make_move(choice - 1, self._player_id)
+        if self._ai_vs_ai:
+            print(str(self._game_board))
+            time.sleep(3)
+
         if self._game_board.check_win(self._player_id):
-            input("someone won text")
+            main_menu.win_menu(self._player_id)
             return False
         if self._game_board.check_draw():
-            input("its a draw text")
+            main_menu.draw_menu()
             return False
         return True
 
@@ -127,5 +138,8 @@ class AIPlayer(Player):
         """
         choices = {1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 0, 7: 0}
         for col in range(self._game_board._cols):
-            choices[col + 1] += max(res["own"][f'{col}'], res["enemy"][f'{col}'])
+            if res["own"][f'{col}'] == res["enemy"][f'{col}']:
+                choices[col + 1] = res["own"][f'{col}'] + 0.5
+            else:
+                choices[col + 1] += max(res["own"][f'{col}'], res["enemy"][f'{col}'])
         return choices
