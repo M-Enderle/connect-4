@@ -82,36 +82,32 @@ class GameBoard(GameElement):
         check if a player has won.
         :return: False if no one has won, True otherwise
         """
-        # TODO: debug this
         self.has_ended = True
         for x in range(self._cols):
             for y in range(self._rows):
                 x_smaller = x < self._cols - 3
                 x_bigger = x > 2
                 y_smaller = y < self._rows - 3
-                if x_smaller and self._game_board[y][x] == \
-                        self._game_board[y][x + 1] == \
-                        self._game_board[y][x + 2] == \
-                        self._game_board[y][x + 3] == player - 1:
-                    # print("col", x, "row", y, "horizontal") # debug purposes
-                    return True
-                if y_smaller and self._game_board[y][x] == \
-                        self._game_board[y + 1][x] == \
-                        self._game_board[y + 2][x] == \
-                        self._game_board[y + 3][x] == player - 1:
-                    # print("col", x, "row", y,  "vertical") # debug purposes
-                    return True
-                if x_smaller and y_smaller and self._game_board[y][x] == \
-                        self._game_board[y + 1][x + 1] == \
-                        self._game_board[y + 2][x + 2] == \
-                        self._game_board[y + 3][x + 3] == player - 1:
-                    # print("col", x, "row", y, "diagonal right") # debug purposes
-                    return True
-                if x_bigger and y_smaller and self._game_board[y][x] == \
-                        self._game_board[y + 1][x - 1] == \
-                        self._game_board[y + 2][x - 2] == \
-                        self._game_board[y + 3][x - 3] == player - 1:
-                    # print("col", x, "row", y, "diagonal left") # debug purposes
+                if any([x_smaller and self._game_board[y][x] ==
+                        self._game_board[y][x + 1] ==
+                        self._game_board[y][x + 2] ==
+                        self._game_board[y][x + 3] == player - 1,
+
+                        y_smaller and self._game_board[y][x] ==
+                        self._game_board[y + 1][x] ==
+                        self._game_board[y + 2][x] ==
+                        self._game_board[y + 3][x] == player - 1,
+
+                        x_smaller and y_smaller and self._game_board[y][x] ==
+                        self._game_board[y + 1][x + 1] ==
+                        self._game_board[y + 2][x + 2] ==
+                        self._game_board[y + 3][x + 3] == player - 1,
+
+                        x_bigger and y_smaller and self._game_board[y][x] ==
+                        self._game_board[y + 1][x - 1] ==
+                        self._game_board[y + 2][x - 2] ==
+                        self._game_board[y + 3][x - 3] == player - 1
+                        ]):
                     return True
         self.has_ended = False
         return False
@@ -127,7 +123,7 @@ class GameBoard(GameElement):
                     return False
         self.has_ended = True
         return True
-      
+
     @property
     def cols(self):
         return self._cols
@@ -185,12 +181,14 @@ class Player(GameElement):
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
+                    print(str(self._game_board))
                     main_menu.win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
+                    print(str(self._game_board))
                     main_menu.draw_menu()
                     return False
-                  
+
                 return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nPlayer {self._player_id}, its " \
