@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 from termtables import to_string, styles
+
 import main_menu
 
 
@@ -81,39 +82,37 @@ class GameBoard(GameElement):
         check if a player has won.
         :return: False if no one has won, True otherwise
         """
-        
+        # TODO: debug this
         self.has_ended = True
         for x in range(self._cols):
             for y in range(self._rows):
-                try:
-                    if self._game_board[y][x] == \
-                            self._game_board[y][x + 1] == \
-                            self._game_board[y][x + 2] == \
-                            self._game_board[y][x + 3] == player - 1:
-
-                        return True
-                    if self._game_board[y][x] == \
-                            self._game_board[y + 1][x] == \
-                            self._game_board[y + 2][x] == \
-                            self._game_board[y + 3][x] == player - 1:
-                        return True
-                    if self._game_board[y][x] == \
-                            self._game_board[y + 1][x + 1] == \
-                            self._game_board[y + 2][x + 2] == \
-                            self._game_board[y + 3][x + 3] == player - 1:
-                        return True
-                    if self._game_board[y][x] == \
-                            self._game_board[y + 1][x - 1] == \
-                            self._game_board[y + 2][x - 2] == \
-                            self._game_board[y + 3][x - 3] == player - 1:
-                        return True
-                    if self._game_board[y][x] == \
-                            self._game_board[y - 1][x + 1] == \
-                            self._game_board[y - 2][x + 1] == \
-                            self._game_board[y - 3][x + 1] == player - 1:
-                        return True
-                except IndexError:
-                    pass
+                x_smaller = x < self._cols - 3
+                x_bigger = x > 2
+                y_smaller = y < self._rows - 3
+                if x_smaller and self._game_board[y][x] == \
+                        self._game_board[y][x + 1] == \
+                        self._game_board[y][x + 2] == \
+                        self._game_board[y][x + 3] == player - 1:
+                    # print("col", x, "row", y, "horizontal") # debug purposes
+                    return True
+                if y_smaller and self._game_board[y][x] == \
+                        self._game_board[y + 1][x] == \
+                        self._game_board[y + 2][x] == \
+                        self._game_board[y + 3][x] == player - 1:
+                    # print("col", x, "row", y,  "vertical") # debug purposes
+                    return True
+                if x_smaller and y_smaller and self._game_board[y][x] == \
+                        self._game_board[y + 1][x + 1] == \
+                        self._game_board[y + 2][x + 2] == \
+                        self._game_board[y + 3][x + 3] == player - 1:
+                    # print("col", x, "row", y, "diagonal right") # debug purposes
+                    return True
+                if x_bigger and y_smaller and self._game_board[y][x] == \
+                        self._game_board[y + 1][x - 1] == \
+                        self._game_board[y + 2][x - 2] == \
+                        self._game_board[y + 3][x - 3] == player - 1:
+                    # print("col", x, "row", y, "diagonal left") # debug purposes
+                    return True
         self.has_ended = False
         return False
 
@@ -176,9 +175,10 @@ class Player(GameElement):
         Plays a move.
         :return: True if game is still running, False if game is over.
         """
-        print(str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
-                                        f'to place your checker?\n')
+        title = str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
+                                        f'to place your checker?\n'
         while True:
+            print(title)
             options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
             index = main_menu.navigate_game(options)
             if index == len(options) - 1:
@@ -193,5 +193,5 @@ class Player(GameElement):
                   
                 return True
             else:
-                title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
+                title = str(self._game_board) + f"\n\nthis column is already full!\nPlayer {self._player_id}, its " \
                                                 f"your turn. Which column do you want to place your checker? "
