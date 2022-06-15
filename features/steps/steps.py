@@ -1,5 +1,12 @@
 from behave import given, when, then
-import wexpect
+
+# check if on windows
+import platform
+if platform.system() == 'Windows':
+    import wexpect as pexpect
+else:
+    import pexpect
+
 from init import init
 
 '''
@@ -29,19 +36,15 @@ Just change the project_path variable.
 -Johni
 '''
 
+
 @given('starting main.py')
 def step_impl(context):
-    # Start cmd as child process
-    context.child = wexpect.spawn('cmd.exe')
-    # Change into right directory
-    cmd_commands = ["cd " + init.project_path, init.start_game]
+    # Start a terminal as a child process
+    # print the current directory
+    context.child = pexpect.spawn('cmd.exe')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
-    # Loops through cmd commands
-    for command in cmd_commands:
-        context.child.expect('>', timeout=3)
-        context.child.sendline(command)
-        print(context.child.before, end='')
-        print(context.child.after, end='')
 
 # Scenario: Starting the game and quitting
 @when('the user selects Quit')
@@ -52,12 +55,14 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the game closes itself')
 def step_impl(context):
     # Expecting Goodbye! from console
     context.child.expect('Goodbye!', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Starting the game and choosing 'Play Game'
 @when('the user selects "Play Game"')
@@ -68,12 +73,14 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the user gets transferred to the next menu')
-def step_impl(context,):
+def step_impl(context, ):
     # Expects to be in game mode menu
     context.child.expect('~Game Mode Selection Menu~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Going back to the start menu
 @when('the user is in the gamemode menu')
@@ -84,6 +91,7 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @when('the user selects the <- back button')
 def step_impl(context):
     # Selecting <- back button
@@ -92,12 +100,14 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the user gets transferred to the start menu')
 def step_impl(context):
     # Expecting to be in main menu
     context.child.expect('Connect 4 Main Menu', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Player's turn is invalid
 @when('there is a game running')
@@ -110,6 +120,7 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @when('Player makes invalid move')
 def step_impl(context):
     context.child.expect('Please select an option', timeout=3)
@@ -117,17 +128,20 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('a message will appear which sais that the move is invalid')
 def step_impl(context):
     context.child.expect('You can only choose numbers between 1 and 8', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the game asks for a new input')
 def step_impl(context):
     context.child.expect('Please select an option', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Player wins
 @when('a player wins')
@@ -139,17 +153,20 @@ def step_impl(context):
         print(context.child.before, end='')
         print(context.child.after, end='')
 
+
 @then('there is a congratulation message')
 def step_impl(context):
     context.child.expect('Congrats!', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the user can return back to the main menu')
 def step_impl(context):
     context.child.expect('Press "enter" to return to the main menu', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Draw
 @when('the board is full')
@@ -175,11 +192,13 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the message "The game is a draw!" appears')
 def step_impl(context):
     context.child.expect('The game is a draw', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Quitting during game
 @when('the Quit button is selected')
@@ -190,6 +209,7 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the game quits')
 def step_impl(context):
     # Game should quit
@@ -197,12 +217,14 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the user will be asked if they want to save the game')
 def step_impl(context):
     # User should be asked if they want to save the game
     context.child.expect('Do you want to save the current game?', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Selecting 'Player vs Player'
 @when('the user selects "Player vs Player"')
@@ -217,9 +239,10 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the selected gamemode starts')
 def step_impl(context):
-    #Expecting the selected game mode starts
+    # Expecting the selected game mode starts
     context.child.expect('You have chosen "Player vs Player"', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -238,12 +261,14 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the move is valid')
 def step_impl(context):
-    #Expecting the selected move is valid
+    # Expecting the selected move is valid
     context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 @when('the user presses rules')
 def step_impl(context):
@@ -252,26 +277,29 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @then('the rules appears')
 def step_impl(context):
-    context.child.expect('~Rules~',timeout=3)
+    context.child.expect('~Rules~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 @then('when the user presses enter he is back to the main menu')
 def step_impl(context):
     context.child.sendline()
-    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    context.child.expect('~Connect 4 Main Menu~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+
 @when('the user selects Player vs AI')
 def step_impl(context):
-    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    context.child.expect('~Connect 4 Main Menu~', timeout=3)
     context.child.sendline('1')
-    context.child.expect('~Game Mode Selection Menu~',timeout=3)
+    context.child.expect('~Game Mode Selection Menu~', timeout=3)
     context.child.sendline('2')
-    context.child.expect('~Difficulty Menu of AI~',timeout=3)
+    context.child.expect('~Difficulty Menu of AI~', timeout=3)
     context.child.sendline('1')
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -279,7 +307,7 @@ def step_impl(context):
 
 @then('Plays a game vs AI and loses')
 def step_impl(context):
-    #Player moves
+    # Player moves
     context.child.sendline('1')
     context.child.sendline('1')
     context.child.sendline('1')
@@ -289,12 +317,8 @@ def step_impl(context):
     context.child.sendline('2')
     context.child.sendline('3')
     context.child.sendline('3')
-    
-    #AI should win
+
+    # AI should win
     context.child.expect('someone won text')
     print(context.child.before, end='')
     print(context.child.after, end='')
-
-
-
-

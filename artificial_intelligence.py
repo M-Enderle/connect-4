@@ -1,3 +1,4 @@
+import math
 import random
 import time
 
@@ -36,7 +37,7 @@ class AIPlayer(Player):
         self._game_board.make_move(choice - 1, self._player_id)
         if self._ai_vs_ai:
             print(str(self._game_board))
-            time.sleep(3)
+            time.sleep(1)
 
         if self._game_board.check_win(self._player_id):
             main_menu.win_menu(self._player_id)

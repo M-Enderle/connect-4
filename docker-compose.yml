@@ -1,0 +1,6 @@
+services:
+  connect-4:
+    build: .
+    stdin_open: true
+    tty: true
+    command: /bin/bash
