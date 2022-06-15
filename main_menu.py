@@ -42,11 +42,10 @@ def navigate_menu():
     :return: chosen menu option
     """
     print('~Connect 4 Main Menu~')
-    options = ['Play Game', 'Rules', 'Quit']
+    options = ['Play Game', 'Load Game', 'Rules', 'Quit']
     print_options(options)
     print('Please select an option: ')
     return ask_for_input(options)
-
 
 def show_rules():
     """
@@ -85,6 +84,12 @@ def ask_save_game():
     return ask_for_input(options)
 
 
+def save_game():
+    """
+    The current game state will be saved
+    """
+
+
 def select_difficulty():
     """
     Choose the difficulty of the AI
@@ -120,3 +125,9 @@ def navigate_game(options):
     print_options(options)
     print('Please select an option: ')
     return ask_for_input(options)
+
+
+def select_loadGame():
+    """
+    The previously Game appears
+    """

@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
         # Exit on quit button
         if menu_option == 2:
-            print("Goodbye!")
+            game_board.load_save(0)
             break
 
         else:
@@ -63,4 +63,5 @@ if __name__ == "__main__":
                     break
 
             if not game_board.has_ended and ask_save_game() == 0:
-                save_game(game_board, "placeholder.txt")
+                # save_game(game_board, "placeholder.txt")
+                game_board.game_save()

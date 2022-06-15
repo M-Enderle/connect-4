@@ -37,6 +37,31 @@ class GameBoard(GameElement):
     def __getitem__(self, item):
         return self._game_board[item]
 
+    def game_save(self):   # [1, 2, 3, 4, 5, 6]
+        save = ""
+        for column in self._game_board:
+            save = save + str(column)[1:-1] + ";"  # take away the []
+        save = save[1:]
+
+        with open('Saved_Game_State.txt', 'w') as file:
+            saved_games = ""
+            save = save + "|" + saved_games
+            file.write(save)
+
+    def load_save(self, game_index):
+        self._game_board = [[-1 for _ in range(self._cols)] for _ in range(self._rows)]   # to empty the game if game is loaded after another game
+        with open('Saved_Game_State.txt', 'r') as file:
+            saved_games = file.read()
+        saved_games = saved_games.split("|")[game_index].split(";")
+        i = 0
+        j = 0
+        for column in saved_games:
+            column = column.split(',')
+            for element in column:
+                self._game_board[i][j] = element
+                j += 1
+                i += 1
+
     def check_valid_move(self, col: int) -> bool:
         """
         Check if a move is valid.
