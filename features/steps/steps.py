@@ -41,7 +41,7 @@ Just change the project_path variable.
 def step_impl(context):
     # Start a terminal as a child process
     # print the current directory
-    context.child = pexpect.spawn('cmd.exe')
+    context.child = pexpect.spawn('python main.py')
     print(context.child.before, end='')
     print(context.child.after, end='')
 
