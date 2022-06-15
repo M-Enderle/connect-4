@@ -1,28 +1,9 @@
 from copy import deepcopy
-
 from termtables import to_string, styles
 import main_menu
 
 
-class GameElement:
-    """
-    The base class for all game elements.
-    """
-
-    def __init__(self):
-        pass
-
-
-class Checker(GameElement):
-    """
-    A checker.
-    """
-
-    def __init__(self):
-        super().__init__()
-
-
-class GameBoard(GameElement):
+class GameBoard:
     """
     The game board.
     """
@@ -90,7 +71,6 @@ class GameBoard(GameElement):
                             self._game_board[y][x + 1] == \
                             self._game_board[y][x + 2] == \
                             self._game_board[y][x + 3] == player - 1:
-
                         return True
                     if self._game_board[y][x] == \
                             self._game_board[y + 1][x] == \
@@ -109,8 +89,8 @@ class GameBoard(GameElement):
                         return True
                     if self._game_board[y][x] == \
                             self._game_board[y - 1][x + 1] == \
-                            self._game_board[y - 2][x + 1] == \
-                            self._game_board[y - 3][x + 1] == player - 1:
+                            self._game_board[y - 2][x + 2] == \
+                            self._game_board[y - 3][x + 3] == player - 1:
                         return True
                 except IndexError:
                     pass
@@ -141,7 +121,7 @@ class GameBoard(GameElement):
         return deepcopy(self)
 
 
-class Player(GameElement):
+class Player:
     """
     The player.
     """
@@ -176,22 +156,25 @@ class Player(GameElement):
         Plays a move.
         :return: True if game is still running, False if game is over.
         """
-        print(str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
-                                        f'to place your checker?\n')
+        text = str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
+                                        f'to place your checker?\n'
         while True:
+            print(text)
             options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
             index = main_menu.navigate_game(options)
             if index == len(options) - 1:
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
+                    print(str(self._game_board))
                     main_menu.win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
+                    print(str(self._game_board))
                     main_menu.draw_menu()
                     return False
                   
                 return True
             else:
-                title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
+                text = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \
                                                 f"your turn. Which column do you want to place your checker? "
