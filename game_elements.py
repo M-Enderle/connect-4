@@ -1,29 +1,10 @@
 from copy import deepcopy
-
 from termtables import to_string, styles
 
 import main_menu
 
 
-class GameElement:
-    """
-    The base class for all game elements.
-    """
-
-    def __init__(self):
-        pass
-
-
-class Checker(GameElement):
-    """
-    A checker.
-    """
-
-    def __init__(self):
-        super().__init__()
-
-
-class GameBoard(GameElement):
+class GameBoard:
     """
     The game board.
     """
@@ -109,6 +90,7 @@ class GameBoard(GameElement):
                         self._game_board[y + 3][x - 3] == player - 1
                         ]):
                     return True
+
         self.has_ended = False
         return False
 
@@ -136,7 +118,7 @@ class GameBoard(GameElement):
         return deepcopy(self)
 
 
-class Player(GameElement):
+class Player:
     """
     The player.
     """
@@ -171,6 +153,7 @@ class Player(GameElement):
         Plays a move.
         :return: True if game is still running, False if game is over.
         """
+        
         title = str(self._game_board) + f'\nPlayer {self._player_id}, its your turn. Which column do you want ' \
                                         f'to place your checker?\n'
         while True:
