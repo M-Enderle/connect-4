@@ -1,6 +1,13 @@
 from behave import given, when, then
-import wexpect
 from init import init
+
+import platform
+if platform.system() == 'Windows':
+    import wexpect as pexpect
+else:
+    import pexpect
+
+
 
 '''
 Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment
@@ -31,17 +38,11 @@ Just change the project_path variable.
 
 @given('starting main.py')
 def step_impl(context):
-    # Start cmd as child process
-    context.child = wexpect.spawn('cmd.exe')
-    # Change into right directory
-    cmd_commands = ["cd " + init.project_path, init.start_game]
-
-    # Loops through cmd commands
-    for command in cmd_commands:
-        context.child.expect('>', timeout=3)
-        context.child.sendline(command)
-        print(context.child.before, end='')
-        print(context.child.after, end='')
+    # Start a terminal as a child process
+    # print the current directory
+    context.child = pexpect.spawn('python main.py')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 # Scenario: Starting the game and quitting
 @when('the user selects Quit')
@@ -154,24 +155,27 @@ def step_impl(context):
 # Scenario: Draw
 @when('the board is full')
 def step_impl(context):
-    first_column = 1
-    second_column = 2
-    for rounds in range(7):
-        if first_column == 9:
-            first_column = 2
-        if second_column == 8:
-            second_column = 1
-        for turns in range(3):
+    #Fills the board
+    for _ in range(1,4):
+        for i in range(1,7):
             context.child.expect('Which column do you want to place your checker', timeout=3)
-            context.child.sendline(str(first_column))
+            context.child.sendline(str(i))
             print(context.child.before, end='')
             print(context.child.after, end='')
+
+    for _ in range(1,4):
+        for x in range(6,0,-1):
             context.child.expect('Which column do you want to place your checker', timeout=3)
-            context.child.sendline(str(second_column))
+            context.child.sendline(str(x))
             print(context.child.before, end='')
             print(context.child.after, end='')
-        first_column += 2
-        second_column += 2
+
+    for _ in range(0,6):
+        context.child.expect('Which column do you want to place your checker', timeout=3)
+        context.child.sendline('7')
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
     print(context.child.before, end='')
     print(context.child.after, end='')
 
@@ -180,6 +184,7 @@ def step_impl(context):
     context.child.expect('The game is a draw', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
+
 
 # Scenario: Quitting during game
 @when('the Quit button is selected')
@@ -258,7 +263,7 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
-@then('when the user presses enter he is back to the main menu')
+@then('when the user presses enter, he is back to the main menu')
 def step_impl(context):
     context.child.sendline()
     context.child.expect('~Connect 4 Main Menu~',timeout=3)
@@ -280,21 +285,46 @@ def step_impl(context):
 @then('Plays a game vs AI and loses')
 def step_impl(context):
     #Player moves
-    context.child.sendline('1')
-    context.child.sendline('1')
-    context.child.sendline('1')
-    context.child.sendline('1')
-    context.child.sendline('2')
-    context.child.sendline('2')
-    context.child.sendline('2')
-    context.child.sendline('3')
-    context.child.sendline('3')
+    for _ in range(4):
+        context.child.sendline('1')
+        context.child.expect('Player 1, its your turn.', timeout=3)
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
+    for _ in range(2):
+        context.child.sendline('2')
+        context.child.expect('Player 1, its your turn.', timeout=3)
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+
+    for _ in range(4):
+        context.child.sendline('3')
+        context.child.expect('Player 1, its your turn.', timeout=3)
+        print(context.child.before, end='')
+        print(context.child.after, end='')
+    
+    context.child.sendline('4')
+    print(context.child.before, end='')
+    print(context.child.after, end='')
     
     #AI should win
-    context.child.expect('someone won text')
+    context.child.expect('Player 2 has won!',timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
+@when('the selected gamemode starts')
+def step_impl(context):
+    context.child.expect('Connect 4 Main Menu',timeout=3)
+    context.child.sendline('1')
+    context.child.expect('Game Mode Selection Menu',timeout=3)
+    context.child.sendline('1')
 
+@when('the Player selects column 1')
+def step_impl(context):
+    context.child.expect('Player 1, its your turn.')
+    context.child.sendline('1')
 
-
+@then('a checker has to be in the lowest free row of the selected column')
+def step_impl(context):
+    context.child.expect('✗')
+    context.child.expect('Player 2, its your turn.')
