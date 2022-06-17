@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 from termtables import to_string, styles
 
 import main_menu
@@ -105,10 +106,6 @@ class GameBoard:
                     return False
         self.has_ended = True
         return True
-
-    @property
-    def cols(self):
-        return self._cols
 
     def deepcopy(self):
         """
