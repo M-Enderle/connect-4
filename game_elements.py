@@ -29,6 +29,7 @@ class GameBoard(GameElement):
 
     def __init__(self, cols: int = 7, rows: int = 6):
         super().__init__()
+        self.player_one_start = True
         self._cols = cols
         self._rows = rows
         self._game_board = [[-1 for _ in range(cols)] for _ in range(rows)]
@@ -41,26 +42,38 @@ class GameBoard(GameElement):
         save = ""
         for column in self._game_board:
             save = save + str(column)[1:-1] + ";"  # take away the []
-        save = save[1:]
+        save = save[:-1]
+        try:
+            with open('Saved_Game_State.txt', 'r') as file:
+                saved_games = file.read()
+        except FileNotFoundError:
+            saved_games = None
 
         with open('Saved_Game_State.txt', 'w') as file:
-            saved_games = ""
-            save = save + "|" + saved_games
-            file.write(save)
+            if (saved_games is None) or (saved_games is ''):
+                file.write(save)
+            else:
+                save = saved_games + "|" + save
+                file.write(save)
 
     def load_save(self, game_index):
         self._game_board = [[-1 for _ in range(self._cols)] for _ in range(self._rows)]   # to empty the game if game is loaded after another game
         with open('Saved_Game_State.txt', 'r') as file:
             saved_games = file.read()
-        saved_games = saved_games.split("|")[game_index].split(";")
+        saved_games = saved_games.split("|")[int(game_index)].split(";")
         i = 0
-        j = 0
-        for column in saved_games:
-            column = column.split(',')
-            for element in column:
-                self._game_board[i][j] = element
+        checkers = 0
+        for rows in saved_games:
+            rows = rows.split(', ')
+            j = 0
+            for element in rows:
+                self._game_board[i][j] = int(element)
+                if element != '-1':
+                    checkers += 1
                 j += 1
-                i += 1
+            i += 1
+        if (checkers % 2) == 1:
+            self.player_one_start = False
 
     def check_valid_move(self, col: int) -> bool:
         """
@@ -210,9 +223,11 @@ class Player(GameElement):
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
+                    print(str(self._game_board))
                     main_menu.win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
+                    print(str(self._game_board))
                     main_menu.draw_menu()
                     return False
                   

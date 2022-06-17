@@ -83,13 +83,6 @@ def ask_save_game():
     print("Do you want to save the current game?: ")
     return ask_for_input(options)
 
-
-def save_game():
-    """
-    The current game state will be saved
-    """
-
-
 def select_difficulty():
     """
     Choose the difficulty of the AI
@@ -127,7 +120,20 @@ def navigate_game(options):
     return ask_for_input(options)
 
 
-def select_loadGame():
+def select_load_game():
     """
-    The previously Game appears
+    You can choose any saved game
     """
+    try:
+        with open('Saved_Game_State.txt', 'r') as file:
+            games = file.read()
+            if games == '':
+                options = 0
+            else:
+                options = len(games.split('|'))
+    except FileNotFoundError:
+        options = 0
+    possibilities = [str(i+1) for i in range(options)]
+    print('Please select your saved game state: ')
+    print_options(possibilities)
+    return ask_for_input(possibilities)
