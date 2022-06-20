@@ -2,7 +2,8 @@ from copy import deepcopy
 
 from termtables import to_string, styles
 import main_menu
-
+import datetime
+import os
 
 class GameElement:
     """
@@ -38,29 +39,27 @@ class GameBoard(GameElement):
     def __getitem__(self, item):
         return self._game_board[item]
 
-    def game_save(self):   # [1, 2, 3, 4, 5, 6]
+    def game_save(self, game_mode):   # [1, 2, 3, 4, 5, 6]
+        # create gamestring
         save = ""
         for column in self._game_board:
             save = save + str(column)[1:-1] + ";"  # take away the []
         save = save[:-1]
-        try:
-            with open('Saved_Game_State.txt', 'r') as file:
-                saved_games = file.read()
-        except FileNotFoundError:
-            saved_games = None
+        date = datetime.datetime(2022, 6, 22)
+        date = date.now()
+        print(str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.'))
+        file = str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.')[0] + '_' + game_mode
 
-        with open('Saved_Game_State.txt', 'w') as file:
-            if (saved_games is None) or (saved_games is ''):
-                file.write(save)
-            else:
-                save = saved_games + "|" + save
-                file.write(save)
+        with open(f'save_games/{file}.txt', 'w') as file:
+            file.write(save + '|' + game_mode)
 
     def load_save(self, game_index):
+        games = os.popen("ls save_games").read().split('\n')[:-1]
+        file_name = games[int(game_index)-1]
         self._game_board = [[-1 for _ in range(self._cols)] for _ in range(self._rows)]   # to empty the game if game is loaded after another game
-        with open('Saved_Game_State.txt', 'r') as file:
-            saved_games = file.read()
-        saved_games = saved_games.split("|")[int(game_index)].split(";")
+        with open(f'save_games/{file_name}', 'r') as file:
+            game_info = file.read().split('|')
+        saved_games = game_info[0].split(";")
         i = 0
         checkers = 0
         for rows in saved_games:
@@ -74,6 +73,7 @@ class GameBoard(GameElement):
             i += 1
         if (checkers % 2) == 1:
             self.player_one_start = False
+        return [file_name, game_info[1]]
 
     def check_valid_move(self, col: int) -> bool:
         """
@@ -209,7 +209,7 @@ class Player(GameElement):
 
         return self._checkers > 0
 
-    def play(self) -> bool:
+    def play(self, filename) -> bool:
         """
         Plays a move.
         :return: True if game is still running, False if game is over.
@@ -220,17 +220,22 @@ class Player(GameElement):
             options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
             index = main_menu.navigate_game(options)
             if index == len(options) - 1:
+                if filename is not None:
+                    os.popen(f"rm save_games/{filename}")
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
                     print(str(self._game_board))
                     main_menu.win_menu(self._player_id)
+                    if filename is not None:
+                        os.popen(f"rm save_games/{filename}")
                     return False
                 if self._game_board.check_draw():
                     print(str(self._game_board))
                     main_menu.draw_menu()
+                    if filename is not None:
+                        os.popen(f"rm save_games/{filename}")
                     return False
-                  
                 return True
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nplayer {self._player_id}, its " \

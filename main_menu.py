@@ -1,4 +1,4 @@
-
+import os
 
 def ask_for_input(options):
     """
@@ -124,16 +124,11 @@ def select_load_game():
     """
     You can choose any saved game
     """
-    try:
-        with open('Saved_Game_State.txt', 'r') as file:
-            games = file.read()
-            if games == '':
-                options = 0
-            else:
-                options = len(games.split('|'))
-    except FileNotFoundError:
-        options = 0
-    possibilities = [str(i+1) for i in range(options)]
+    options = ['<- back']
+    files = os.popen("ls save_games").read().split('\n')
+    for file in files:
+        options.append(file)
+    options = options[:-1]
     print('Please select your saved game state: ')
-    print_options(possibilities)
-    return ask_for_input(possibilities)
+    print_options(options)
+    return ask_for_input(options)

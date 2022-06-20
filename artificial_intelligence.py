@@ -1,6 +1,6 @@
 import random
 import time
-
+import os
 import main_menu
 from game_elements import Player, GameBoard
 
@@ -15,7 +15,7 @@ class AIPlayer(Player):
         super().__init__(player_id, game_board, checkers)
         self._ai_vs_ai = ai_vs_ai
 
-    def play(self) -> bool:
+    def play(self, filename) -> bool:
         """
         Plays a move.
         :return: True if game is still running, False if game is over.
@@ -40,9 +40,15 @@ class AIPlayer(Player):
 
         if self._game_board.check_win(self._player_id):
             main_menu.win_menu(self._player_id)
+            print(str(self._game_board))
+            if filename is not None:
+                os.popen(f"rm save_games/{filename}")
             return False
         if self._game_board.check_draw():
             main_menu.draw_menu()
+            print(str(self._game_board))
+            if filename is not None:
+                os.popen(f"rm save_games/{filename}")
             return False
         return True
 
