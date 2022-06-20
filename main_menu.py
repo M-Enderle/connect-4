@@ -132,3 +132,4 @@ def select_load_game():
     print('Please select your saved game state: ')
     print_options(options)
     return ask_for_input(options)
+

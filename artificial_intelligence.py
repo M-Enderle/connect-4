@@ -54,6 +54,7 @@ class AIPlayer(Player):
             return False
         return True
 
+
     def _check_for_chains(self, row: int, col: int, player_id: int, game_board: GameBoard) -> list:
         """
         Checks for chains at a specific spot in every direction.

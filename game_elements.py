@@ -214,3 +214,4 @@ class Player:
             else:
                 title = str(self._game_board) + f"\n\nthis column is already full!\nPlayer {self._player_id}, its " \
                                                 f"your turn. Which column do you want to place your checker? "
+
