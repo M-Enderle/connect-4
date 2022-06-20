@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="750daef1-07e5-455a-aaaf-69aa8027567e" name="Changes" comment="deleted print statement.&#10;Please delete from Master in game_elements.py import main_menu in line 25, because of the merge conflicts.">
+      <change afterPath="$PROJECT_DIR$/.idea/connect-4.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_06_2022_17_14_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_06_2022_17_14_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_14_06_2022_17_14__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/save_games/2022_06_20_16_34_02_PLAYER_VS_PLAYER.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="29FlfWcf9LTSB1rCtr71jYYbTtg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/louis/PycharmProjects/connect-4&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\louis\PycharmProjects\connect-4" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\louis\PycharmProjects\connect-4" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="connect-4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="750daef1-07e5-455a-aaaf-69aa8027567e" name="Changes" comment="" />
+      <created>1652716818117</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1652716818117</updated>
+    </task>
+    <task id="LOCAL-00001" summary="hab da was kurz ausprobiert">
+      <created>1652717664886</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652717664886</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Rules are ready">
+      <created>1652734072875</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652734072875</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Rules are ready">
+      <created>1652790039195</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652790039195</updated>
+    </task>
+    <task id="LOCAL-00004" summary="you can now see the rules and return to the menu by pressing any key">
+      <created>1652790316726</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652790316726</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixed the problem">
+      <created>1652791052648</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652791052648</updated>
+    </task>
+    <task id="LOCAL-00006" summary="not sure if its correctly done">
+      <created>1654049621347</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654049621347</updated>
+    </task>
+    <task id="LOCAL-00007" summary="save and load function is almost ready">
+      <created>1655327945030</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655327945030</updated>
+    </task>
+    <task id="LOCAL-00008" summary="save and load function is ready and works fine.&#10;Also there is now the gameboard shown after winning/ losing the game.">
+      <created>1655507029393</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655507029393</updated>
+    </task>
+    <task id="LOCAL-00009" summary="the features for the load and save functions are working.&#10;There must be added a Directory called &quot;save_games&quot;, which I couldn't commit. &#10;It also must be tested in Docker, because of the command &quot;ls&quot;.">
+      <created>1655739744328</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1655739744329</updated>
+    </task>
+    <task id="LOCAL-00010" summary="deleted print statement.&#10;Please delete from Master in game_elements.py import main_menu in line 25, because of the merge conflicts.">
+      <created>1655740584886</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1655740584886</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="hab da was kurz ausprobiert" />
+    <MESSAGE value="Rules are ready" />
+    <MESSAGE value="you can now see the rules and return to the menu by pressing any key" />
+    <MESSAGE value="fixed the problem" />
+    <MESSAGE value="not sure if its correctly done" />
+    <MESSAGE value="save and load function is almost ready" />
+    <MESSAGE value="save and load function is ready and works fine.&#10;Also there is now the gameboard shown after winning/ losing the game." />
+    <MESSAGE value="the features for the load and save functions are working.&#10;There must be added a Directory called &quot;save_games&quot;, which I couldn't commit. &#10;It also must be tested in Docker, because of the command &quot;ls&quot;." />
+    <MESSAGE value="deleted print statement.&#10;Please delete from Master in game_elements.py import main_menu in line 25, because of the merge conflicts." />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted print statement.&#10;Please delete from Master in game_elements.py import main_menu in line 25, because of the merge conflicts." />
+  </component>
+</project>
