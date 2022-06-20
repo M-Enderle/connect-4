@@ -8,7 +8,6 @@ else:
     import pexpect
 
 
-
 '''
 Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment
 You can send a user input with context.child.sendline(Your command in String)
@@ -155,22 +154,22 @@ def step_impl(context):
 # Scenario: Draw
 @when('the board is full')
 def step_impl(context):
-    #Fills the board
-    for _ in range(1,4):
-        for i in range(1,7):
+    # Fills the board
+    for _ in range(1, 4):
+        for i in range(1, 7):
             context.child.expect('Which column do you want to place your checker', timeout=3)
             context.child.sendline(str(i))
             print(context.child.before, end='')
             print(context.child.after, end='')
 
-    for _ in range(1,4):
-        for x in range(6,0,-1):
+    for _ in range(1, 4):
+        for x in range(6, 0, -1):
             context.child.expect('Which column do you want to place your checker', timeout=3)
             context.child.sendline(str(x))
             print(context.child.before, end='')
             print(context.child.after, end='')
 
-    for _ in range(0,6):
+    for _ in range(0, 6):
         context.child.expect('Which column do you want to place your checker', timeout=3)
         context.child.sendline('7')
         print(context.child.before, end='')
@@ -224,7 +223,7 @@ def step_impl(context):
 
 @then('the selected gamemode starts')
 def step_impl(context):
-    #Expecting the selected game mode starts
+    # Expecting the selected game mode starts
     context.child.expect('You have chosen "Player vs Player"', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -245,7 +244,7 @@ def step_impl(context):
 
 @then('the move is valid')
 def step_impl(context):
-    #Expecting the selected move is valid
+    # Expecting the selected move is valid
     context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -259,24 +258,24 @@ def step_impl(context):
 
 @then('the rules appears')
 def step_impl(context):
-    context.child.expect('~Rules~',timeout=3)
+    context.child.expect('~Rules~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
 @then('when the user presses enter, he is back to the main menu')
 def step_impl(context):
     context.child.sendline()
-    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    context.child.expect('~Connect 4 Main Menu~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
 @when('the user selects Player vs AI')
 def step_impl(context):
-    context.child.expect('~Connect 4 Main Menu~',timeout=3)
+    context.child.expect('~Connect 4 Main Menu~', timeout=3)
     context.child.sendline('1')
-    context.child.expect('~Game Mode Selection Menu~',timeout=3)
+    context.child.expect('~Game Mode Selection Menu~', timeout=3)
     context.child.sendline('2')
-    context.child.expect('~Difficulty Menu of AI~',timeout=3)
+    context.child.expect('~Difficulty Menu of AI~', timeout=3)
     context.child.sendline('1')
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -284,7 +283,7 @@ def step_impl(context):
 
 @then('Plays a game vs AI and loses')
 def step_impl(context):
-    #Player moves
+    # Player moves
     for _ in range(4):
         context.child.sendline('1')
         context.child.expect('Player 1, its your turn.', timeout=3)
@@ -307,16 +306,16 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
     
-    #AI should win
-    context.child.expect('Player 2 has won!',timeout=3)
+    # AI should win
+    context.child.expect('Player 2 has won!', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
 @when('the selected gamemode starts')
 def step_impl(context):
-    context.child.expect('Connect 4 Main Menu',timeout=3)
+    context.child.expect('Connect 4 Main Menu', timeout=3)
     context.child.sendline('1')
-    context.child.expect('Game Mode Selection Menu',timeout=3)
+    context.child.expect('Game Mode Selection Menu', timeout=3)
     context.child.sendline('1')
 
 @when('the Player selects column 1')
