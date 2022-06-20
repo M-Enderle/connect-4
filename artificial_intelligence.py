@@ -26,9 +26,9 @@ class AIPlayer(Player):
         for i in range(7):
             res["own"][f'{i}'] = self._simulate_move(i)
             res["enemy"][f'{i}'] = self._simulate_move(i, False)
-        choices = self._choice(res)
+        choices = self._choices(res)
         choices = sorted(choices.items(), key=lambda x: x[1], reverse=True)
-        if all(x[1] == choices[0][1] for x in choices):
+        if all(x[1] == choices[0][1] for x in choices if x[1] != -1):
             random.shuffle(choices)
         choice = choices.pop(0)[0]
         while self._game_board.check_valid_move(choice - 1) is False:
@@ -39,12 +39,14 @@ class AIPlayer(Player):
             time.sleep(3)
 
         if self._game_board.check_win(self._player_id):
+            print(str(self._game_board))
             main_menu.win_menu(self._player_id)
             print(str(self._game_board))
             if filename is not None:
                 os.popen(f"rm save_games/{filename}")
             return False
         if self._game_board.check_draw():
+            print(str(self._game_board))
             main_menu.draw_menu()
             print(str(self._game_board))
             if filename is not None:
@@ -124,7 +126,7 @@ class AIPlayer(Player):
             player_id = 2 if self._player_id == 1 else 1
         gameboard = self._game_board.deepcopy()
         if not gameboard.make_move(col, player_id):
-            return 0
+            return -1
         before = self._possible_chains(game_board=self._game_board)
         after = self._possible_chains(game_board=gameboard)
         diff = 0
@@ -136,7 +138,7 @@ class AIPlayer(Player):
                     diff += max(after["enemy"][row][col]) - max(before["enemy"][row][col])
         return diff
 
-    def _choice(self, res):
+    def _choices(self, res):
         """
         Chooses the best move.
         :param res: The results of the simulations.
