@@ -47,7 +47,6 @@ class GameBoard(GameElement):
         save = save[:-1]
         date = datetime.datetime(2022, 6, 22)
         date = date.now()
-        print(str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.'))
         file = str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.')[0] + '_' + game_mode
 
         with open(f'save_games/{file}.txt', 'w') as file:
