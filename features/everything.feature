@@ -23,9 +23,10 @@ Scenario: Selecting 'Player vs Player'
 
 Scenario: Player's turn is valid
    Given starting main.py
-   When the selected gamemode starts
-   And the Player selects column 1
-   Then a checker has to be in the lowest free row of the selected column
+   When the user selects "Play Game"
+   And the user selects "Player vs Player"
+   And the Player selects column <columns>
+   Then the move is valid
 
 Scenario: Player's turn is invalid
    Given starting main.py
