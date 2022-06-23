@@ -125,10 +125,10 @@ def select_load_game():
     You can choose any saved game
     """
     options = ['<- back']
-    files = os.popen("ls save_games").read().split('\n')
+    files = os.listdir('save_games')
+    print(files)
     for file in files:
         options.append(file)
-    options = options[:-1]
     print('Please select your saved game state: ')
     print_options(options)
     return ask_for_input(options)

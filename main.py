@@ -44,9 +44,7 @@ if __name__ == "__main__":
             active_game = True
             if gamemode is None:
                 mode = select_gamemode()
-                print(1)
             else:
-                print(gamemode)
                 mode_chosen = False
                 modes = {"PLAYER_VS_PLAYER": 0, "PLAYER_VS_AI": 1, "AI_VS_AI": 2}
                 for key in modes:
@@ -54,7 +52,6 @@ if __name__ == "__main__":
                         mode = modes[key]
                         mode_chosen = True
                 if not mode_chosen:
-                    print("2")
                     mode = select_gamemode()
 
             # Human vs Human

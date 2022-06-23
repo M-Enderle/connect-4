@@ -43,14 +43,14 @@ class AIPlayer(Player):
             main_menu.win_menu(self._player_id)
             print(str(self._game_board))
             if filename is not None:
-                os.popen(f"rm save_games/{filename}")
+                os.remove(f"save_games/{filename}")
             return False
         if self._game_board.check_draw():
             print(str(self._game_board))
             main_menu.draw_menu()
             print(str(self._game_board))
             if filename is not None:
-                os.popen(f"rm save_games/{filename}")
+                os.remove(f"save_games/{filename}")
             return False
         return True
 

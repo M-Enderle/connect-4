@@ -21,21 +21,24 @@ class GameBoard:
     def __getitem__(self, item):
         return self._game_board[item]
 
-    def game_save(self, game_mode):   # [1, 2, 3, 4, 5, 6]
-        # create gamestring
+    def game_save(self, game_mode):
+        """transforms gameboard into a string and saves it in a file"""
         save = ""
         for column in self._game_board:
-            save = save + str(column)[1:-1] + ";"  # take away the []
+            save = save + str(column)[1:-1] + ";"
         save = save[:-1]
         date = datetime.datetime(2022, 6, 22)
         date = date.now()
         file = str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.')[0] + '_' + game_mode
-
-        with open(f'save_games/{file}.txt', 'w') as file:
+        if not os.path.isdir('save_games'):
+            os.mkdir('save_games')
+        with open(f'save_games/{file}.save', 'w') as file:
             file.write(save + '|' + game_mode)
 
     def load_save(self, game_index):
-        games = os.popen("ls save_games").read().split('\n')[:-1]
+        """reads the savefile and turns the string brack into the gameboard"""
+        games = os.listdir('save_games')
+        print(games)
         file_name = games[int(game_index)-1]
         self._game_board = [[-1 for _ in range(self._cols)] for _ in range(self._rows)]   # to empty the game if game is loaded after another game
         with open(f'save_games/{file_name}', 'r') as file:
@@ -195,20 +198,20 @@ class Player:
             index = main_menu.navigate_game(options)
             if index == len(options) - 1:
                 if filename is not None:
-                    os.popen(f"rm save_games/{filename}")
+                    os.remove(f"save_games/{filename}")
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
                     print(str(self._game_board))
                     main_menu.win_menu(self._player_id)
                     if filename is not None:
-                        os.popen(f"rm save_games/{filename}")
+                        os.remove(f"save_games/{filename}")
                     return False
                 if self._game_board.check_draw():
                     print(str(self._game_board))
                     main_menu.draw_menu()
                     if filename is not None:
-                        os.popen(f"rm save_games/{filename}")
+                        os.remove(f"save_games/{filename}")
                     return False
                 return True
             else:
