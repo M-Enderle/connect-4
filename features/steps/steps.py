@@ -371,6 +371,6 @@ def step_impl(context):
     print(context.child.before, end='')
     print(context.child.after, end='')
 
-@then('Set Checkers and Player 2, its your turn.')
+@then('Its player 2 turn.')
 def step_impl(context):
     context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)

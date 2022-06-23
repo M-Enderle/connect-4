@@ -1,72 +1,72 @@
 Feature: A game of connect-4
-#Scenario: Starting the game and quitting
-#   Given starting main.py
-#   When the user selects Quit
-#   Then the game closes itself
-#
-#Scenario: Starting the game and choosing 'Play Game'
-#   Given starting main.py
-#   When the user selects "Play Game"
-#   Then the user gets transferred to the next menu
-#
-#Scenario: Going back to the start menu
-#   Given starting main.py
-#   When the user is in the gamemode menu
-#   When the user selects the <- back button
-#   Then the user gets transferred to the start menu
-#
-#Scenario: Selecting 'Player vs Player'
-#   Given starting main.py
-#   When the user selects "Play Game"
-#   And the user selects "Player vs Player"
-#   Then the selected gamemode starts
-#
-#Scenario: Player's turn is valid
-#   Given starting main.py
-#   When the user selects "Play Game"
-#   And the user selects "Player vs Player"
-#   And the Player selects column <columns>
-#   Then the move is valid
-#
-#Scenario: Player's turn is invalid
-#   Given starting main.py
-#   When there is a game running
-#   And Player makes invalid move
-#   Then a message will appear which sais that the move is invalid
-#   And the game asks for a new input
-#
-#Scenario: Player wins
-#   Given starting main.py
-#   When there is a game running
-#   And a player wins
-#   Then there is a congratulation message
-#   And the user can return back to the main menu
-#
-#Scenario: Draw
-#   Given starting main.py
-#   When there is a game running
-#   And the board is full
-#   Then the message "The game is a draw!" appears
-#   And the user can return back to the main menu
-#
-#Scenario: Quitting during game
-#   Given starting main.py
-#   When there is a game running
-#   And the Quit button is selected
-#   Then the game quits
-#   And the user will be asked if they want to save the game
-#
-#Scenario: Looking at the Rules
-#   Given starting main.py
-#   When the user presses rules
-#   Then the rules appears
-#   And when the user presses enter, he is back to the main menu
-#
-#Scenario: A game vs AI
-#   Given starting main.py
-#   When the user selects Player vs AI
-#   Then Plays a game vs AI and loses
-#
+Scenario: Starting the game and quitting
+  Given starting main.py
+   When the user selects Quit
+   Then the game closes itself
+
+Scenario: Starting the game and choosing 'Play Game'
+   Given starting main.py
+   When the user selects "Play Game"
+   Then the user gets transferred to the next menu
+
+Scenario: Going back to the start menu
+   Given starting main.py
+   When the user is in the gamemode menu
+   When the user selects the <- back button
+   Then the user gets transferred to the start menu
+
+Scenario: Selecting 'Player vs Player'
+   Given starting main.py
+   When the user selects "Play Game"
+   And the user selects "Player vs Player"
+   Then the selected gamemode starts
+
+Scenario: Player's turn is valid
+   Given starting main.py
+   When the user selects "Play Game"
+   And the user selects "Player vs Player"
+   And the Player selects column <columns>
+   Then the move is valid
+
+Scenario: Player's turn is invalid
+   Given starting main.py
+   When there is a game running
+   And Player makes invalid move
+   Then a message will appear which sais that the move is invalid
+   And the game asks for a new input
+
+Scenario: Player wins
+   Given starting main.py
+   When there is a game running
+   And a player wins
+   Then there is a congratulation message
+   And the user can return back to the main menu
+
+Scenario: Draw
+   Given starting main.py
+   When there is a game running
+   And the board is full
+   Then the message "The game is a draw!" appears
+   And the user can return back to the main menu
+
+Scenario: Quitting during game
+   Given starting main.py
+   When there is a game running
+   And the Quit button is selected
+   Then the game quits
+   And the user will be asked if they want to save the game
+
+Scenario: Looking at the Rules
+   Given starting main.py
+   When the user presses rules
+   Then the rules appears
+   And when the user presses enter, he is back to the main menu
+
+Scenario: A game vs AI
+   Given starting main.py
+   When the user selects Player vs AI
+   Then Plays a game vs AI and loses
+
 Scenario: Testing 5 moves
    Given starting main.py
    When the user selects "Play Game"
@@ -76,4 +76,4 @@ Scenario: Testing 5 moves
    And the Player selects column 2
    And the Player selects column 3
    And the Player selects column 4
-   Then Set Checkers and Player 2, its your turn.
+   Then Its player 2 turn.
