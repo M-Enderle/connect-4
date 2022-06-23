@@ -320,10 +320,57 @@ def step_impl(context):
 
 @when('the Player selects column 1')
 def step_impl(context):
-    context.child.expect('Player 1, its your turn.')
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
     context.child.sendline('1')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
 
 @then('a checker has to be in the lowest free row of the selected column')
 def step_impl(context):
     context.child.expect('✗')
-    context.child.expect('Player 2, its your turn.')
+    context.child.expect('Player 2, its your turn.', timeout=3)
+
+@when('the Player selects column 2')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('2')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the Player selects column 3')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('3')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@when('the Player selects column 4')
+def step_impl(context):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline('4')
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')
+
+@then('Set Checkers and Player 2, its your turn.')
+def step_impl(context):
+    context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
