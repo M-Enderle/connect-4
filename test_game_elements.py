@@ -1,4 +1,5 @@
 import unittest
+
 import game_elements
 
 
@@ -21,7 +22,7 @@ class TestGameBoard(unittest.TestCase):
     def setUp(self) -> None:
         self.game_board = game_elements.GameBoard()
         self.player_one = game_elements.Player(1, self.game_board)
-        self.player_two = game_elements.Player(1, self.game_board)
+        self.player_two = game_elements.Player(2, self.game_board)
 
     def test_check_valid_move(self):
         # set up
@@ -49,7 +50,7 @@ class TestGameBoard(unittest.TestCase):
     def tearDown(self):
         self.game_board = game_elements.GameBoard()
         self.player_one = game_elements.Player(1, self.game_board)
-        self.player_two = game_elements.Player(1, self.game_board)
+        self.player_two = game_elements.Player(2, self.game_board)
 
 
 if __name__ == "__main__":
