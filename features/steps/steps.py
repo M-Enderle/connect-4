@@ -318,59 +318,23 @@ def step_impl(context):
     context.child.expect('Game Mode Selection Menu', timeout=3)
     context.child.sendline('1')
 
-@when('the Player selects column 1')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('1')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
 @then('a checker has to be in the lowest free row of the selected column')
 def step_impl(context):
     context.child.expect('✗')
     context.child.expect('Player 2, its your turn.', timeout=3)
 
-@when('the Player selects column 2')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('2')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
-@when('the Player selects column 3')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('3')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
-@when('the Player selects column 4')
-def step_impl(context):
-    # Wait for prompt when cmd becomes ready.
-    context.child.expect('Please select an option: ')
-
-    # run command
-    context.child.sendline('4')
-
-    # Print content
-    print(context.child.before, end='')
-    print(context.child.after, end='')
-
 @then('Its player 2 turn.')
 def step_impl(context):
     context.child.expect('Player 2, its your turn. Which column do you want to place your checker?', timeout=3)
+
+@when('the Player selects column {col}')
+def step_impl(context, col):
+    # Wait for prompt when cmd becomes ready.
+    context.child.expect('Please select an option: ')
+
+    # run command
+    context.child.sendline(col)
+
+    # Print content
+    print(context.child.before, end='')
+    print(context.child.after, end='')

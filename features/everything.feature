@@ -71,9 +71,9 @@ Scenario: Testing 5 moves
    Given starting main.py
    When the user selects "Play Game"
    And the user selects "Player vs Player"
-   And the Player selects column 2
-   And the Player selects column 3
+   And the Player selects column 1
    And the Player selects column 2
    And the Player selects column 3
    And the Player selects column 4
+   And the Player selects column 5
    Then Its player 2 turn.
