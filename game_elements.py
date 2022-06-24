@@ -53,7 +53,7 @@ class GameBoard:
 
         return to_string(
             [[" " if self._game_board[row][col] == -1 else ("○" if self._game_board[row][col] == 1
-                                                            else "✗")
+                                                            else "x")
               for col in range(self._cols)] for row in range(self._rows)],
             header=list(range(1, self._cols + 1)),
             style=styles.ascii_thin_double,
