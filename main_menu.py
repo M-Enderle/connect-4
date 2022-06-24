@@ -120,6 +120,8 @@ def select_load_game():
     """
     You can choose any saved game
     """
+    print('~ Load gamestate ~')
+
     options = []
     if not os.listdir('./save_games'):
         input('There are no saved games. Press "enter" to return to the main menu\n')
