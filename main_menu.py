@@ -41,7 +41,7 @@ def navigate_menu():
     Makes navigation of menu possible
     :return: chosen menu option
     """
-    print('~Connect 4 Main Menu~')
+    print('~ Connect 4 Main Menu ~')
     options = ['Play Game', 'Load Game', 'Rules', 'Quit']
     print_options(options)
     print('Please select an option: ')
@@ -52,7 +52,7 @@ def show_rules():
     """
     Shows rules
     """
-    print('~Rules~')
+    print('~ Rules ~')
     rules = ["1. Players must connect 4 of the same checkers in a row to win.",
              "2. Only one checker is played at a time.",
              "3. Players can be on the offensive or defensive.",
@@ -69,7 +69,7 @@ def select_gamemode():
     Player vs Player , Player vs AI, AI vs AI
     :return: chosen game type
     """
-    print('~Game Mode Selection Menu~')
+    print('~ Game Mode Selection Menu ~')
     options = ['Player vs Player', 'Player vs AI', 'AI vs AI', '<- back']
     print_options(options)
     print('Please select an option: ')

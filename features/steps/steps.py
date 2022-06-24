@@ -40,7 +40,7 @@ def step_impl(context):
 def step_impl(context):
     # Expecting from console and sending input
     context.child.expect('Please select an option: ', timeout=3)
-    context.child.sendline('3')
+    context.child.sendline('4')
     print(context.child.before, end='')
     print(context.child.after, end='')
 

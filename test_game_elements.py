@@ -12,10 +12,6 @@ class TestPlayer(unittest.TestCase):
     def test__use_checker(self):
         self.assertTrue(self.player._use_checker(1))
 
-    def tearDown(self):
-        self.game_board = game_elements.GameBoard()
-        self.player = game_elements.Player(1, self.game_board)
-
 
 class TestGameBoard(unittest.TestCase):
 
@@ -46,11 +42,6 @@ class TestGameBoard(unittest.TestCase):
         for i in wrong_inputs:
             self.assertFalse(self.game_board.make_move(i, self.player_one._player_id))
         self.assertFalse(self.game_board.make_move(0, self.player_one._player_id))
-
-    def tearDown(self):
-        self.game_board = game_elements.GameBoard()
-        self.player_one = game_elements.Player(1, self.game_board)
-        self.player_two = game_elements.Player(2, self.game_board)
 
 
 if __name__ == "__main__":
