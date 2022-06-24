@@ -3,4 +3,4 @@ termcolor==1.1.0
 termtables==0.2.4
 sympy~=1.10.1
 behave~=1.2.6
-pexpect
+pexpect~=4.8.0
