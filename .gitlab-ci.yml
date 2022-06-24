@@ -1,5 +1,4 @@
 stages:
-    - build
     - package
     - test
     - e2e
@@ -48,7 +47,7 @@ e2e:
     - source venv/bin/activate
     - pip install --upgrade pip
     - pip install -r requirements.txt
-    - python3 -m behave .\tests\e2e\
+    - python3 -m behave ./tests/e2e/
 
 remove-container:
   stage: cleanup
