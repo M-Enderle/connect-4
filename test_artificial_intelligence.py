@@ -56,10 +56,10 @@ class TestArtificialIntelligence(unittest.TestCase):
             self.assertEqual(self.player_two._simulate_move(i, own=True), expected_results['own'][i])
             self.assertEqual(self.player_two._simulate_move(i, own=False), expected_results['enemy'][i])
 
-    def tearDown(self):
-        self.game_board = game_elements.GameBoard()
-        self.player_one = artificial_intelligence.AIPlayer(1, self.game_board)
-        self.player_two = artificial_intelligence.AIPlayer(2, self.game_board)
+    # def tearDown(self):
+    #     self.game_board = game_elements.GameBoard()
+    #     self.player_one = artificial_intelligence.AIPlayer(1, self.game_board)
+    #     self.player_two = artificial_intelligence.AIPlayer(2, self.game_board)
 
 
 if __name__ == '__main__':
