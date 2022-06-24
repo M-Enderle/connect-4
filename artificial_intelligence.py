@@ -1,6 +1,5 @@
 import random
 import time
-
 import main_menu
 from game_elements import Player, GameBoard
 
