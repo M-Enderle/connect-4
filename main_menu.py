@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+
 def ask_for_input(options):
     """
     Gets input from user

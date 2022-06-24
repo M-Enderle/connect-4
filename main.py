@@ -55,9 +55,9 @@ if __name__ == "__main__":
         elif game_mode == 3:
             continue
 
-            # how did you get here?
-            else:
-                raise ValueError("Invalid game mode selected!")
+        # how did you get here?
+        else:
+            raise ValueError("Invalid game mode selected!")
 
         # game loop
         while active_game:
