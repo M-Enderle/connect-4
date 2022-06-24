@@ -1,4 +1,3 @@
-import math
 import random
 import time
 
@@ -37,7 +36,7 @@ class AIPlayer(Player):
         self._game_board.make_move(choice - 1, self._player_id)
         if self._ai_vs_ai:
             print(str(self._game_board))
-            time.sleep(1)
+            time.sleep(2)
 
         if self._game_board.check_win(self._player_id):
             print(str(self._game_board))
@@ -125,12 +124,12 @@ class AIPlayer(Player):
         before = self._possible_chains(game_board=self._game_board)
         after = self._possible_chains(game_board=gameboard)
         diff = 0
-        for row in range(gameboard._rows):
-            for col in range(gameboard._cols):
+        for _row in range(gameboard._rows):
+            for _col in range(gameboard._cols):
                 if own:
-                    diff += max(after["own"][row][col]) - max(before["own"][row][col])
+                    diff += max(after["own"][_row][_col]) - max(before["own"][_row][_col])
                 else:
-                    diff += max(after["enemy"][row][col]) - max(before["enemy"][row][col])
+                    diff += max(after["enemy"][_row][_col]) - max(before["enemy"][_row][_col])
         return diff
 
     def _choices(self, res):
@@ -139,7 +138,7 @@ class AIPlayer(Player):
         :param res: The results of the simulations.
         :return: The best move.
         """
-        choices = {1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 0, 7: 0}
+        choices = dict([(x+1, 0) for x in range(self._game_board._cols)])
         for col in range(self._game_board._cols):
             if res["own"][f'{col}'] == res["enemy"][f'{col}']:
                 choices[col + 1] = res["own"][f'{col}'] + 0.5
