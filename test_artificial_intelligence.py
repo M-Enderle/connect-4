@@ -10,8 +10,6 @@ class TestArtificialIntelligence(unittest.TestCase):
         self.player_one = artificial_intelligence.Player(1, self.game_board)
         self.player_two = artificial_intelligence.AIPlayer(2, self.game_board)
 
-    # good inputs
-
     def test__check_for_chains_good_inputs(self):
         self.game_board.make_move(0, self.player_one._player_id)
         self.assertListEqual(self.player_two._check_for_chains(5, 0, self.player_two._player_id, self.game_board),
