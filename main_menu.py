@@ -131,9 +131,8 @@ def select_load_game():
         options.append(date.strftime('%d.%m.%Y %H:%M:%S') + " - " + file[20:].split(".")[0].lower().replace("_", " "))
 
     options.append('<- back')
-
-    print('Please select your saved game state: ')
     print_options(options)
+    print('Please select your saved game state: ')
     option = ask_for_input(options)
 
     if option == len(options) - 1:
