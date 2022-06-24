@@ -251,7 +251,7 @@ def step_impl(context):
 @when('the user presses rules')
 def step_impl(context):
     context.child.expect('Please select an option:', timeout=3)
-    context.child.sendline('2')
+    context.child.sendline('3')
     print(context.child.before, end='')
     print(context.child.after, end='')
 
@@ -277,8 +277,6 @@ def step_impl(context):
     context.child.sendline('1')
     context.child.expect('~Game Mode Selection Menu~', timeout=3)
     context.child.sendline('2')
-    context.child.expect('~Difficulty Menu of AI~', timeout=3)
-    context.child.sendline('1')
     print(context.child.before, end='')
     print(context.child.after, end='')
 
