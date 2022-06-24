@@ -1,5 +1,4 @@
 from behave import given, when, then
-from init import init
 
 import platform
 if platform.system() == 'Windows':
@@ -28,17 +27,9 @@ print(context.child.after, end='')
 -Johni
 '''
 
-'''
-Btw, I also created a file called init.py where you can change your project directory more easier.
-Just change the project_path variable.
-
--Johni
-'''
-
 @given('starting main.py')
 def step_impl(context):
-    # Start a terminal as a child process
-    # print the current directory
+    # starting the game
     context.child = pexpect.spawn('python main.py')
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -325,5 +316,5 @@ def step_impl(context):
 
 @then('a checker has to be in the lowest free row of the selected column')
 def step_impl(context):
-    context.child.expect('✗')
+    context.child.expect('x')
     context.child.expect('Player 2, its your turn.')
