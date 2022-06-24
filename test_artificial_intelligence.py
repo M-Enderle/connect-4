@@ -35,14 +35,15 @@ class TestArtificialIntelligence(unittest.TestCase):
                 [[1, 1, 1, 1, 1, 1, 1, 1], [0], [0], [0], [0], [0], [0]]
             ]
         }
+
         self.game_board.make_move(0, self.player_one._player_id)
         self.assertDictEqual(self.player_two._possible_chains(), res)
 
     def test__choices_good_inputs(self):
         res = {'own': {'0': 1, '1': 1, '2': 1, '3': 1, '4': 1, '5': 1, '6': 1},
-               'enemy': {'0': 27, '1': 13, '2': 6, '3': 6, '4': 6, '5': 6, '6': 6}}
+               'enemy': {'0': 3, '1': 3, '2': 1, '3': 1, '4': 1, '5': 1, '6': 1}}
         self.game_board.make_move(0, self.player_one._player_id)
-        self.assertDictEqual(self.player_two._choices(res), {1: 27, 2: 13, 3: 6, 4: 6, 5: 6, 6: 6, 7: 6}
+        self.assertDictEqual(self.player_two._choices(res), {1: 3, 2: 3, 3: 1.5, 4: 1.5, 5: 1.5, 6: 1.5, 7: 1.5}
                              )
 
     def test__simulate_move_good_inputs(self):
@@ -50,7 +51,7 @@ class TestArtificialIntelligence(unittest.TestCase):
 
         expected_results = {
             'own': [1, 1, 1, 1, 1, 1, 1, 1],
-            'enemy': [27, 13, 6, 6, 6, 6, 6]
+            'enemy': [3, 3, 1, 1, 1, 1, 1]
         }
         for i in range(7):
             self.assertEqual(self.player_two._simulate_move(i, own=True), expected_results['own'][i])
