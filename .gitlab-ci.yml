@@ -1,5 +1,4 @@
 stages:
-    - build
     - package
     - test
     - e2e
@@ -15,17 +14,6 @@ cache:
   paths:
     - .cache/pip
     - venv/
-
-build:
-    stage: build
-    image: python:3.8-alpine
-    script:
-        - python --version
-        - pip install virtualenv
-        - virtualenv venv
-        - source venv/bin/activate
-        - pip install --upgrade pip
-        - pip install -r requirements.txt
 
 containerize:
   stage: package
@@ -59,7 +47,7 @@ e2e:
     - source venv/bin/activate
     - pip install --upgrade pip
     - pip install -r requirements.txt
-    - python3 -m behave
+    - python3 -m behave ./tests/e2e/
 
 remove-container:
   stage: cleanup

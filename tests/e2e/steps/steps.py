@@ -1,5 +1,4 @@
 import platform
-
 from behave import given, when, then
 
 if platform.system() == 'Windows':
@@ -7,30 +6,11 @@ if platform.system() == 'Windows':
 else:
     import pexpect
 
-'''
-Notes: Whenever you start a scenario, start with Given starting main.py in everything.feature to setup the environment
-You can send a user input with context.child.sendline(Your command in String)
-You can also expect a String from the console with context.child.expect(Expected String)
-It is important for testing purposes that you setup the timer correctly. Right now we are using the timeout of 3.
-If the timeout is not set correctly, it will stop behave for 2 minutes so please dont forget that.
-Example: context.child.expect("Connect 4 Main Menu", timeout=3)
-
-You can also debug behave.
-I created a file called behave.ini which allows us to read printed statements.
-To turn it on, just put both stderr_capture and stdout_capture to False.
-(Tip: if you want to work on your scenario only without reading debugging messages from other scenarios,
-comment every other scenario except yours in everything.feature with #. This make your scenario isolated.)
-To print console or user input just use
-print(context.child.before, end='')
-print(context.child.after, end='')
-
--Johni
-'''
 
 @given('starting main.py')
 def step_impl(context):
     # starting the game
-    context.child = pexpect.spawn('python main.py')
+    context.child = pexpect.spawn('python ./connect_4/main.py')
     print(context.child.before, end='')
     print(context.child.after, end='')
 

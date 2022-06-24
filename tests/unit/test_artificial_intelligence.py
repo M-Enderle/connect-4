@@ -1,5 +1,4 @@
 import unittest
-
 import artificial_intelligence
 import game_elements
 
