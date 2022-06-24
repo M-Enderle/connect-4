@@ -2,7 +2,7 @@ from copy import deepcopy
 from termtables import to_string, styles
 import datetime
 import os
-import main_menu
+from main_menu import navigate_game, win_menu, draw_menu
 
 
 class GameBoard:
