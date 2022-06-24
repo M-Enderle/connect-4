@@ -129,7 +129,7 @@ class AIPlayer(Player):
                 if own:
                     diff += max(after["own"][_row][_col]) - max(before["own"][_row][_col])
                 else:
-                    diff += max(after["enemy"][_row][col]) - max(before["enemy"][_row][_col])
+                    diff += max(after["enemy"][_row][_col]) - max(before["enemy"][_row][_col])
         return diff
 
     def _choices(self, res):

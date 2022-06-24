@@ -27,13 +27,6 @@ print(context.child.after, end='')
 -Johni
 '''
 
-'''
-Btw, I also created a file called init.py where you can change your project directory more easier.
-Just change the project_path variable.
-
--Johni
-'''
-
 
 @given('starting main.py')
 def step_impl(context):
@@ -307,7 +300,7 @@ def step_impl(context):
         print(context.child.before, end='')
         print(context.child.after, end='')
 
-    for _ in range(4):
+    for _ in range(3):
         context.child.sendline('3')
         context.child.expect('Player 1, its your turn.', timeout=3)
         print(context.child.before, end='')
