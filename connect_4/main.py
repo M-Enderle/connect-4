@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
         # Human vs AI
         elif game_mode == 1:
-            p1 = Player(1, game_board)
+            p1 = Player(1, game_board, vs_ai=True)
             p2 = AIPlayer(2, game_board, ai_vs_ai=False)
 
         # AI vs AI

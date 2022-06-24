@@ -6,7 +6,7 @@ import game_elements
 class TestArtificialIntelligence(unittest.TestCase):
     def setUp(self) -> None:
         self.game_board = game_elements.GameBoard()
-        self.player_one = artificial_intelligence.Player(1, self.game_board)
+        self.player_one = artificial_intelligence.Player(1, self.game_board, vs_ai=True)
         self.player_two = artificial_intelligence.AIPlayer(2, self.game_board)
 
     def test__check_for_chains_good_inputs(self):

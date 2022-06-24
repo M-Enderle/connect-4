@@ -1,5 +1,6 @@
 import unittest
 import game_elements
+import datetime
 
 
 class TestPlayer(unittest.TestCase):
@@ -33,10 +34,12 @@ class TestGameBoard(unittest.TestCase):
         # set up
         wrong_inputs = [-1, 7, 8, 100]
         # assert True
-        for columns in range(7):
-            self.assertTrue(self.game_board.make_move(columns, self.player_one._player_id))
-        for columns in range(5):
-            self.assertTrue(self.game_board.make_move(0, self.player_one._player_id))
+        for column in range(7):
+            self.assertTrue(self.game_board.make_move(column, self.player_one._player_id),
+                            msg=f"expected to be able to make a move in column {column} but failed")
+        for column in range(5):
+            self.assertTrue(self.game_board.make_move(0, self.player_one._player_id),
+                            msg="expected to be able to make a move in column 0 but failed")
         # assert False
         for i in wrong_inputs:
             self.assertFalse(self.game_board.make_move(i, self.player_one._player_id))
