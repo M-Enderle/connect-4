@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 
 
 def ask_for_input(options):
@@ -30,10 +32,8 @@ def input_validation(options):
 
 
 def print_options(options):
-    increment = 1
-    for option in options:
-        print(str(increment) + ': [' + str(option) + ']')
-        increment += 1
+    for index, option in enumerate(options):
+        print(str(index + 1) + ': ' + str(option))
 
 
 def navigate_menu():
@@ -41,8 +41,8 @@ def navigate_menu():
     Makes navigation of menu possible
     :return: chosen menu option
     """
-    print('~Connect 4 Main Menu~')
-    options = ['Play Game', 'Rules', 'Quit']
+    print('~ Connect 4 Main Menu ~')
+    options = ['Play Game', 'Load Game', 'Rules', 'Quit']
     print_options(options)
     print('Please select an option: ')
     return ask_for_input(options)
@@ -52,7 +52,7 @@ def show_rules():
     """
     Shows rules
     """
-    print('~Rules~')
+    print('~ Rules ~')
     rules = ["1. Players must connect 4 of the same checkers in a row to win.",
              "2. Only one checker is played at a time.",
              "3. Players can be on the offensive or defensive.",
@@ -61,6 +61,7 @@ def show_rules():
         print(rule)
     input('Press "Enter" to go back to the Menu \n')
 
+
 def select_gamemode():
     """
     Choose the game type
@@ -68,7 +69,7 @@ def select_gamemode():
     Player vs Player , Player vs AI, AI vs AI
     :return: chosen game type
     """
-    print('~Game Mode Selection Menu~')
+    print('~ Game Mode Selection Menu ~')
     options = ['Player vs Player', 'Player vs AI', 'AI vs AI', '<- back']
     print_options(options)
     print('Please select an option: ')
@@ -82,18 +83,11 @@ def ask_save_game():
     options = ['Yes', 'No']
     print_options(options)
     print("Do you want to save the current game?: ")
-    return ask_for_input(options)
-
-
-def select_difficulty():
-    """
-    Choose the difficulty of the AI
-    """
-    print('~Difficulty Menu of AI~')
-    options = ['Can I play, daddy?', 'Bring it on', 'ultra-nightmare', '<- back']
-    print_options(options)
-    print('Please choose a difficulty: ')
-    return ask_for_input(options)
+    inp = input().lower()
+    if inp in ["1", "yes", "y"]:
+        return 0
+    elif inp in ["0", "no", "n"]:
+        return 1
 
 
 def win_menu(player_id):
@@ -120,3 +114,31 @@ def navigate_game(options):
     print_options(options)
     print('Please select an option: ')
     return ask_for_input(options)
+
+
+def select_load_game():
+    """
+    You can choose any saved game
+    """
+    print('~ Load gamestate ~')
+
+    options = []
+    if not os.listdir('./save_games'):
+        input('There are no saved games. Press "enter" to return to the main menu\n')
+        return -1
+
+    files = os.listdir('save_games')
+    for file in files:
+        date = datetime.strptime(file[:19], '%Y_%m_%d_%H_%M_%S')
+        options.append(date.strftime('%d.%m.%Y %H:%M:%S') + " - " + file[20:].split(".")[0].lower().replace("_", " "))
+
+    options.append('<- back')
+    print_options(options)
+    print('Please select your saved game state: ')
+    option = ask_for_input(options)
+
+    if option == len(options) - 1:
+        return -1
+
+    print(option)
+    return files[option]
