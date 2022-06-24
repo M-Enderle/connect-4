@@ -16,6 +16,7 @@ class GameBoard:
         self._rows = rows
         self._game_board = self._new_board()
         self.has_ended = False
+        self._last_moves = []
 
     def _new_board(self):
         return [[-1 for _ in range(self._cols)] for _ in range(self._rows)]
@@ -45,8 +46,17 @@ class GameBoard:
                 if self._game_board[row][col] == -1:
                     self._game_board[row][col] += player
                     break
+            self._last_moves.append(col)
             return True
         return False
+
+    def revert_move(self):
+        """reverts the last move"""
+        col = self._last_moves.pop()
+        for row in range(self._rows):
+            if self._game_board[row][col] != -1:
+                self._game_board[row][col] = -1
+                break
 
     def __str__(self):
         """
@@ -160,17 +170,26 @@ class GameBoard:
 
         return gamemode, 1
 
+    @property
+    def cols(self):
+        return self._cols
+
+    @property
+    def can_revert(self):
+        return len(self._last_moves) >= 2
+
 
 class Player:
     """
     The player.
     """
 
-    def __init__(self, player_id, game_board: GameBoard, checkers: int = 21):
+    def __init__(self, player_id: int, game_board: GameBoard, vs_ai=False, checkers: int = 21):
         super().__init__()
         self._checkers = checkers
         self._game_board = game_board
         self._player_id = player_id
+        self._vs_ai = vs_ai
 
     def _use_checker(self, col: int) -> bool:
         """
@@ -201,10 +220,18 @@ class Player:
                                         f'to place your checker?\n'
         while True:
             print(title)
-            options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
+            options = [f'{i + 1}' for i in range(self._game_board.cols)] + ["quit"]
+            if self._vs_ai and self._game_board.can_revert:
+                options.insert(-1, "revert move")
             index = navigate_game(options)
             if index == len(options) - 1:
                 return False
+            if index == len(options) - 2 and self._vs_ai and self._game_board.can_revert:
+                self._game_board.revert_move()
+                self._game_board.revert_move()
+                title = str(self._game_board) + f'\nSuccessfully reverted. Which column do you want ' \
+                                                f'to place your checker?\n'
+                continue
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
                     print(str(self._game_board))

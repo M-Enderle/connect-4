@@ -123,11 +123,15 @@ def select_load_game():
     print('~ Load gamestate ~')
 
     options = []
+
+    if not os.path.exists('save_games'):
+        os.mkdir('save_games')
+
     if not os.listdir('./save_games'):
         input('There are no saved games. Press "enter" to return to the main menu\n')
         return -1
 
-    files = os.listdir('save_games')
+    files = os.listdir('./save_games')
     for file in files:
         date = datetime.strptime(file[:19], '%Y_%m_%d_%H_%M_%S')
         options.append(date.strftime('%d.%m.%Y %H:%M:%S') + " - " + file[20:].split(".")[0].lower().replace("_", " "))
