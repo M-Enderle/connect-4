@@ -202,17 +202,17 @@ class Player:
         while True:
             print(title)
             options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
-            index = main_menu.navigate_game(options)
+            index = navigate_game(options)
             if index == len(options) - 1:
                 return False
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
                     print(str(self._game_board))
-                    main_menu.win_menu(self._player_id)
+                    win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
                     print(str(self._game_board))
-                    main_menu.draw_menu()
+                    draw_menu()
                     return False
 
                 return True

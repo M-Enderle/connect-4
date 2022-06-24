@@ -39,11 +39,11 @@ class AIPlayer(Player):
 
         if self._game_board.check_win(self._player_id):
             print(str(self._game_board))
-            main_menu.win_menu(self._player_id)
+            win_menu(self._player_id)
             return False
         if self._game_board.check_draw():
             print(str(self._game_board))
-            main_menu.draw_menu()
+            draw_menu()
             return False
         return True
 
