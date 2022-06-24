@@ -82,10 +82,6 @@ class TestGameBoard(unittest.TestCase):
         self.assertRaises(FileNotFoundError, self.game_board.load_game,
                           "non_existing_file.save")
 
-    def test_load_game_with_non_existing_folder(self): # dann wird der aber nich mehr klappen.
-        self.assertRaises(WindowsError, self.game_board.load_game,
-                          "some_file.save")
-
     def test_revert_move(self):
         self.assertFalse(self.game_board.can_revert, msg="expected to not be able to revert")
 
