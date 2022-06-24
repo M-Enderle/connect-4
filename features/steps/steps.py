@@ -57,7 +57,7 @@ def step_impl(context):
 @when('the user selects "Play Game"')
 def step_impl(context):
     # Expects to be in main menu and gets into game mode menu
-    context.child.expect('~Connect 4 Main Menu~', timeout=3)
+    context.child.expect('~ Connect 4 Main Menu ~', timeout=3)
     context.child.sendline('1')
     print(context.child.before, end='')
     print(context.child.after, end='')
@@ -66,7 +66,7 @@ def step_impl(context):
 @then('the user gets transferred to the next menu')
 def step_impl(context, ):
     # Expects to be in game mode menu
-    context.child.expect('~Game Mode Selection Menu~', timeout=3)
+    context.child.expect('~ Game Mode Selection Menu ~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
@@ -258,7 +258,7 @@ def step_impl(context):
 
 @then('the rules appears')
 def step_impl(context):
-    context.child.expect('~Rules~', timeout=3)
+    context.child.expect('~ Rules ~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
@@ -266,16 +266,16 @@ def step_impl(context):
 @then('when the user presses enter, he is back to the main menu')
 def step_impl(context):
     context.child.sendline()
-    context.child.expect('~Connect 4 Main Menu~', timeout=3)
+    context.child.expect('~ Connect 4 Main Menu ~', timeout=3)
     print(context.child.before, end='')
     print(context.child.after, end='')
 
 
 @when('the user selects "Player vs AI"')
 def step_impl(context):
-    context.child.expect('~Connect 4 Main Menu~', timeout=3)
+    context.child.expect('~ Connect 4 Main Menu ~', timeout=3)
     context.child.sendline('1')
-    context.child.expect('~Game Mode Selection Menu~', timeout=3)
+    context.child.expect('~ Game Mode Selection Menu ~', timeout=3)
     context.child.sendline('2')
     print(context.child.before, end='')
     print(context.child.after, end='')
