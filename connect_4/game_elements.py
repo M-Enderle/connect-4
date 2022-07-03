@@ -1,8 +1,8 @@
 from copy import deepcopy
-
 from termtables import to_string, styles
-
-import main_menu
+import datetime
+import os
+from main_menu import navigate_game, win_menu, draw_menu
 
 
 class GameBoard:
@@ -14,8 +14,12 @@ class GameBoard:
         super().__init__()
         self._cols = cols
         self._rows = rows
-        self._game_board = [[-1 for _ in range(cols)] for _ in range(rows)]
+        self._game_board = self._new_board()
         self.has_ended = False
+        self._last_moves = []
+
+    def _new_board(self):
+        return [[-1 for _ in range(self._cols)] for _ in range(self._rows)]
 
     def __getitem__(self, item):
         return self._game_board[item]
@@ -42,8 +46,17 @@ class GameBoard:
                 if self._game_board[row][col] == -1:
                     self._game_board[row][col] += player
                     break
+            self._last_moves.append(col)
             return True
         return False
+
+    def revert_move(self):
+        """reverts the last move"""
+        col = self._last_moves.pop()
+        for row in range(self._rows):
+            if self._game_board[row][col] != -1:
+                self._game_board[row][col] = -1
+                break
 
     def __str__(self):
         """
@@ -53,7 +66,7 @@ class GameBoard:
 
         return to_string(
             [[" " if self._game_board[row][col] == -1 else ("○" if self._game_board[row][col] == 1
-                                                            else "✗")
+                                                            else "x")
               for col in range(self._cols)] for row in range(self._rows)],
             header=list(range(1, self._cols + 1)),
             style=styles.ascii_thin_double,
@@ -114,17 +127,69 @@ class GameBoard:
         """
         return deepcopy(self)
 
+    def save_game(self, game_mode):
+        """transforms gameboard into a string and saves it in a file"""
+        modes = {0: "PLAYER_VS_PLAYER", 1: "PLAYER_VS_AI", 2: "AI_VS_AI"}
+        save = f"gamemode: {game_mode}\n"
+        for column in self._game_board:
+            save = save + str(column)[1:-1] + "\n"
+        save = save[:-1]
+        date = datetime.datetime.now()
+        file = str(date).replace(' ', '_').replace('-', '_').replace(':', '_').split('.')[0] + '_' + modes[game_mode]
+        if not os.path.isdir('save_games'):
+            os.mkdir('save_games')
+        with open(f'save_games/{file}.save', 'w') as file:
+            file.write(save)
+
+    def load_game(self, filename):
+        """reads the savefile and turns the string brack into the gameboard"""
+
+        self._game_board = self._new_board()
+
+        with open(f'save_games/{filename}', 'r') as file:
+            lines = file.readlines()
+
+        os.remove(f'save_games/{filename}')
+
+        gamemode = int(lines[0].split(': ')[1])
+        lines = lines[1:]
+        for index, line in enumerate(lines):
+            row = [int(field) for field in line.split(",")]
+            self._game_board[index] = row
+
+        missing = 0
+        for row in self._game_board:
+            for index, field in enumerate(row):
+                if field == -1:
+                    missing += 1
+
+        checkers = self._cols * self._rows - missing
+
+        if (checkers % 2) == 1:
+            return gamemode, 2
+
+        return gamemode, 1
+
+    @property
+    def cols(self):
+        return self._cols
+
+    @property
+    def can_revert(self):
+        return len(self._last_moves) >= 2
+
 
 class Player:
     """
     The player.
     """
 
-    def __init__(self, player_id, game_board: GameBoard, checkers: int = 21):
+    def __init__(self, player_id: int, game_board: GameBoard, vs_ai=False, checkers: int = 21):
         super().__init__()
         self._checkers = checkers
         self._game_board = game_board
         self._player_id = player_id
+        self._vs_ai = vs_ai
 
     def _use_checker(self, col: int) -> bool:
         """
@@ -155,18 +220,26 @@ class Player:
                                         f'to place your checker?\n'
         while True:
             print(title)
-            options = [f'{i + 1}' for i in range(self._game_board._cols)] + ["quit"]
-            index = main_menu.navigate_game(options)
+            options = [f'{i + 1}' for i in range(self._game_board.cols)] + ["quit"]
+            if self._vs_ai and self._game_board.can_revert:
+                options.insert(-1, "revert move")
+            index = navigate_game(options)
             if index == len(options) - 1:
                 return False
+            if index == len(options) - 2 and self._vs_ai and self._game_board.can_revert:
+                self._game_board.revert_move()
+                self._game_board.revert_move()
+                title = str(self._game_board) + f'\nSuccessfully reverted. Which column do you want ' \
+                                                f'to place your checker?\n'
+                continue
             if self._use_checker(index):
                 if self._game_board.check_win(self._player_id):
                     print(str(self._game_board))
-                    main_menu.win_menu(self._player_id)
+                    win_menu(self._player_id)
                     return False
                 if self._game_board.check_draw():
                     print(str(self._game_board))
-                    main_menu.draw_menu()
+                    draw_menu()
                     return False
 
                 return True

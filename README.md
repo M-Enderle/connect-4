@@ -18,3 +18,9 @@ and run the following command to install the libraries:
 
 ## Info
 Software engineering project 4. Semester @ Deggendorf Institute of Technology
+
+## Docker
+Run ``docker build -t connect-4 .`` then ``docker run -i connect-4``
+
+## Docker compose
+Run ``docker-compose run connect-4``

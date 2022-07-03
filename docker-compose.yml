@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  connect-4:
+    build: .
+    stdin_open: true
+    tty: true
